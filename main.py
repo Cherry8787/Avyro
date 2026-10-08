@@ -10,9 +10,9 @@ from calorie_calc import (
     get_meal_calorie_split,
     get_target_calories,
 )
+from food_db import FOOD_DATABASE
 from meal_planner import generate_daily_meal_plan
 
-# Set theme and color palette
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
 
@@ -23,10 +23,9 @@ class AvyroApp(ctk.CTk):
         super().__init__()
 
         self.title("Avyro - Eat. Move. Evolve.")
-        self.geometry("550x680")
+        self.geometry("550x720")
         self.resizable(False, False)
 
-        # User Profile Data Storage
         self.user_data = {
             "name": "",
             "email": "",
@@ -38,41 +37,36 @@ class AvyroApp(ctk.CTk):
             "activity": "moderate",
             "outside_freq": "a",
             "prep_pref": "a",
+            "selected_foods": [],
         }
 
         self.previous_meal_plan = {}
 
-        # Container for screens
         self.container = ctk.CTkFrame(self)
         self.container.pack(fill="both", expand=True, padx=20, pady=20)
 
-        # Show Window 1 on launch
         self.show_window_1_registration()
 
     def clear_container(self):
-        """Clears all widgets from the container before rendering a new window."""
         for widget in self.container.winfo_children():
             widget.destroy()
 
     # ==========================================
-    # WINDOW 1: Registration (Sign Up / Login)
+    # WINDOW 1: Registration
     # ==========================================
     def show_window_1_registration(self):
         self.clear_container()
 
-        title = ctk.CTkLabel(
+        ctk.CTkLabel(
             self.container,
             text="Avyro",
             font=ctk.CTkFont(size=30, weight="bold"),
-        )
-        title.pack(pady=(20, 5))
-
-        subtitle = ctk.CTkLabel(
+        ).pack(pady=(20, 5))
+        ctk.CTkLabel(
             self.container,
             text="Eat. Move. Evolve.",
             font=ctk.CTkFont(size=14, slant="italic"),
-        )
-        subtitle.pack(pady=(0, 20))
+        ).pack(pady=(0, 20))
 
         frame = ctk.CTkFrame(self.container)
         frame.pack(fill="x", padx=20, pady=10)
@@ -93,14 +87,13 @@ class AvyroApp(ctk.CTk):
         )
         self.entry_email.pack(pady=10)
 
-        btn_next = ctk.CTkButton(
+        ctk.CTkButton(
             self.container,
             text="Next Step ➔",
             width=200,
             height=40,
             command=self.save_w1_and_next,
-        )
-        btn_next.pack(pady=30)
+        ).pack(pady=30)
 
     def save_w1_and_next(self):
         self.user_data["name"] = self.entry_name.get().strip() or "User"
@@ -119,24 +112,20 @@ class AvyroApp(ctk.CTk):
             font=ctk.CTkFont(size=22, weight="bold"),
         ).pack(pady=(15, 15))
 
-        # Age
         ctk.CTkLabel(self.container, text="Age (years):").pack(anchor="w", padx=40)
         self.entry_age = ctk.CTkEntry(self.container, width=300)
         self.entry_age.insert(0, "20")
         self.entry_age.pack(pady=(0, 10))
 
-        # Gender
         ctk.CTkLabel(self.container, text="Gender:").pack(anchor="w", padx=40)
         self.gender_var = ctk.StringVar(value="Male")
-        gender_segmented = ctk.CTkSegmentedButton(
+        ctk.CTkSegmentedButton(
             self.container,
             values=["Male", "Female"],
             variable=self.gender_var,
             width=300,
-        )
-        gender_segmented.pack(pady=(0, 10))
+        ).pack(pady=(0, 10))
 
-        # Height
         ctk.CTkLabel(self.container, text="Height (cm):").pack(
             anchor="w", padx=40
         )
@@ -144,7 +133,6 @@ class AvyroApp(ctk.CTk):
         self.entry_height.insert(0, "170")
         self.entry_height.pack(pady=(0, 10))
 
-        # Weight
         ctk.CTkLabel(self.container, text="Weight (kg):").pack(
             anchor="w", padx=40
         )
@@ -152,27 +140,24 @@ class AvyroApp(ctk.CTk):
         self.entry_weight.insert(0, "65")
         self.entry_weight.pack(pady=(0, 10))
 
-        # Target Goal
         ctk.CTkLabel(self.container, text="Your Target Goal:").pack(
             anchor="w", padx=40
         )
         self.target_var = ctk.StringVar(value="Maintain Weight")
-        target_dropdown = ctk.CTkOptionMenu(
+        ctk.CTkOptionMenu(
             self.container,
             values=["Weight Loss", "Maintain Weight", "Weight Gain"],
             variable=self.target_var,
             width=300,
-        )
-        target_dropdown.pack(pady=(0, 15))
+        ).pack(pady=(0, 15))
 
-        btn_next = ctk.CTkButton(
+        ctk.CTkButton(
             self.container,
             text="Continue ➔",
             width=200,
             height=40,
             command=self.save_w2_and_next,
-        )
-        btn_next.pack(pady=15)
+        ).pack(pady=15)
 
     def save_w2_and_next(self):
         try:
@@ -198,38 +183,33 @@ class AvyroApp(ctk.CTk):
             font=ctk.CTkFont(size=20, weight="bold"),
         ).pack(pady=(10, 15))
 
-        # Question 1: Activity level
         ctk.CTkLabel(
             self.container, text="1. Daily Activity / Workout Frequency:"
         ).pack(anchor="w", padx=30)
         self.activity_var = ctk.StringVar(value="moderate")
-        act_dropdown = ctk.CTkOptionMenu(
+        ctk.CTkOptionMenu(
             self.container,
             values=["sedentary", "light", "moderate", "active", "N/A"],
             variable=self.activity_var,
             width=300,
-        )
-        act_dropdown.pack(pady=(0, 15))
+        ).pack(pady=(0, 15))
 
-        # Question 2: Mood
         ctk.CTkLabel(
             self.container, text="2. How is your energy/mood today?"
         ).pack(anchor="w", padx=30)
         self.mood_var = ctk.StringVar(value="Energetic")
-        mood_dropdown = ctk.CTkOptionMenu(
+        ctk.CTkOptionMenu(
             self.container,
             values=["Energetic", "Normal", "Tired", "Stressed"],
             variable=self.mood_var,
             width=300,
-        )
-        mood_dropdown.pack(pady=(0, 15))
+        ).pack(pady=(0, 15))
 
-        # Question 3: Eating Outside Frequency
         ctk.CTkLabel(
             self.container, text="3. How often do you eat outside?"
         ).pack(anchor="w", padx=30)
         self.outside_var = ctk.StringVar(value="a) Once a week")
-        outside_dropdown = ctk.CTkOptionMenu(
+        ctk.CTkOptionMenu(
             self.container,
             values=[
                 "a) Once a week",
@@ -239,17 +219,15 @@ class AvyroApp(ctk.CTk):
             ],
             variable=self.outside_var,
             width=300,
-        )
-        outside_dropdown.pack(pady=(0, 20))
+        ).pack(pady=(0, 20))
 
-        btn_next = ctk.CTkButton(
+        ctk.CTkButton(
             self.container,
             text="Next Step ➔",
             width=200,
             height=40,
             command=self.save_w3_and_next,
-        )
-        btn_next.pack(pady=10)
+        ).pack(pady=10)
 
     def save_w3_and_next(self):
         self.user_data["activity"] = self.activity_var.get()
@@ -257,14 +235,14 @@ class AvyroApp(ctk.CTk):
         self.show_window_4_meal_prep()
 
     # ==========================================
-    # WINDOW 4: Meal Preparation Preference
+    # WINDOW 4: Meal Prep Style
     # ==========================================
     def show_window_4_meal_prep(self):
         self.clear_container()
 
         ctk.CTkLabel(
             self.container,
-            text="Meal Preference",
+            text="Meal Preparation Style",
             font=ctk.CTkFont(size=20, weight="bold"),
         ).pack(pady=(15, 10))
 
@@ -284,34 +262,89 @@ class AvyroApp(ctk.CTk):
         ]
 
         for text, val in opts:
-            rb = ctk.CTkRadioButton(
+            ctk.CTkRadioButton(
                 self.container,
                 text=text,
                 value=val,
                 variable=self.prep_var,
-            )
-            rb.pack(anchor="w", padx=50, pady=10)
+            ).pack(anchor="w", padx=50, pady=10)
 
-        btn_next = ctk.CTkButton(
+        ctk.CTkButton(
             self.container,
-            text="Generate My Plan ➔",
+            text="Select Food Options ➔",
             width=200,
             height=40,
             command=self.save_w4_and_next,
-        )
-        btn_next.pack(pady=30)
+        ).pack(pady=30)
 
     def save_w4_and_next(self):
         self.user_data["prep_pref"] = self.prep_var.get()
-        self.show_window_5_daily_plan()
+        self.show_window_5_food_selection()
 
     # ==========================================
-    # WINDOW 5 & 6: Meal Plan & Timings Display
+    # WINDOW 5: Food Preferences Checklist (NEW)
     # ==========================================
-    def show_window_5_daily_plan(self):
+    def show_window_5_food_selection(self):
         self.clear_container()
 
-        # Calculations
+        ctk.CTkLabel(
+            self.container,
+            text="Preferred Food Options",
+            font=ctk.CTkFont(size=20, weight="bold"),
+        ).pack(pady=(10, 5))
+
+        ctk.CTkLabel(
+            self.container,
+            text="Check the items you enjoy eating:",
+            font=ctk.CTkFont(size=12),
+        ).pack(pady=(0, 10))
+
+        # Scrollable area for checkable food items
+        scroll_frame = ctk.CTkScrollableFrame(
+            self.container, width=450, height=380
+        )
+        scroll_frame.pack(pady=10)
+
+        self.checkbox_vars = {}
+
+        for category, items in FOOD_DATABASE.items():
+            cat_label = ctk.CTkLabel(
+                scroll_frame,
+                text=f"--- {category} ---",
+                font=ctk.CTkFont(size=14, weight="bold"),
+            )
+            cat_label.pack(anchor="w", pady=(10, 5))
+
+            for food in items:
+                var = ctk.BooleanVar(value=True)  # Default checked
+                chk = ctk.CTkCheckBox(
+                    scroll_frame, text=food["name"], variable=var
+                )
+                chk.pack(anchor="w", padx=20, pady=3)
+                self.checkbox_vars[food["name"]] = var
+
+        ctk.CTkButton(
+            self.container,
+            text="Generate Meal Plan ➔",
+            width=200,
+            height=40,
+            command=self.save_w5_and_next,
+        ).pack(pady=15)
+
+    def save_w5_and_next(self):
+        # Store user's checked foods
+        selected = [
+            name for name, var in self.checkbox_vars.items() if var.get()
+        ]
+        self.user_data["selected_foods"] = selected
+        self.show_window_6_daily_plan()
+
+    # ==========================================
+    # WINDOW 6: Daily Meal Plan Display
+    # ==========================================
+    def show_window_6_daily_plan(self):
+        self.clear_container()
+
         bmi, bmi_cat = calculate_bmi(
             self.user_data["weight"], self.user_data["height"]
         )
@@ -325,13 +358,11 @@ class AvyroApp(ctk.CTk):
         target_cal = get_target_calories(tdee, self.user_data["target"])
         split = get_meal_calorie_split(target_cal)
 
-        # Generate Meal Plan avoiding consecutive day repeats
         meal_plan = generate_daily_meal_plan(
             self.user_data["prep_pref"], self.previous_meal_plan
         )
         self.previous_meal_plan = meal_plan
 
-        # Header Info
         header_text = f"Hello, {self.user_data['name']}! | BMI: {bmi} ({bmi_cat})\nTarget Calories: {target_cal} kcal/day"
         ctk.CTkLabel(
             self.container,
@@ -339,7 +370,6 @@ class AvyroApp(ctk.CTk):
             font=ctk.CTkFont(size=14, weight="bold"),
         ).pack(pady=(5, 10))
 
-        # Schedule Banner
         schedule_frame = ctk.CTkFrame(self.container, fg_color="#2b2b2b")
         schedule_frame.pack(fill="x", padx=10, pady=5)
         ctk.CTkLabel(
@@ -348,7 +378,6 @@ class AvyroApp(ctk.CTk):
             font=ctk.CTkFont(size=11),
         ).pack(pady=5)
 
-        # Display Meal Slots
         slots = [
             ("B - Breakfast", "08:30 AM", "Breakfast"),
             ("L - Lunch", "01:30 PM", "Lunch"),
@@ -377,26 +406,22 @@ class AvyroApp(ctk.CTk):
                 font=ctk.CTkFont(size=11),
             ).pack(side="right", padx=10, pady=5)
 
-            # Hyperlink Recipe Button
-            link_btn = ctk.CTkButton(
+            ctk.CTkButton(
                 slot_frame,
                 text="🔗 Recipe",
                 width=70,
                 height=24,
                 font=ctk.CTkFont(size=10),
                 command=lambda url=item["link"]: webbrowser.open(url),
-            )
-            link_btn.pack(side="right", padx=5)
+            ).pack(side="right", padx=5)
 
-        # Regenerate / Refresh Button
-        btn_refresh = ctk.CTkButton(
+        ctk.CTkButton(
             self.container,
             text="🔄 Regenerate Plan (No Consecutive Repeats)",
             width=250,
             height=35,
-            command=self.show_window_5_daily_plan,
-        )
-        btn_refresh.pack(pady=15)
+            command=self.show_window_6_daily_plan,
+        ).pack(pady=15)
 
 
 if __name__ == "__main__":
