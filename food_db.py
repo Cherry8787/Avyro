@@ -31,6 +31,12 @@ FOOD_DATABASE = {
             "calories": 380,
             "prep_type": "Fresh cooking",
             "link": "https://www.gimmesomeoven.com/avocado-toast-recipe/"
+        },
+        {
+            "name": "Cafe Breakfast Bagel & Coffee Combo",
+            "calories": 420,
+            "prep_type": "Restaurant / Takeout",
+            "link": "https://www.google.com/maps/search/Breakfast+Cafe+Restaurants+Near+Me"
         }
     ],
     "Lunch": [
@@ -77,6 +83,12 @@ FOOD_DATABASE = {
             "calories": 180,
             "prep_type": "Assembly-only",
             "link": "https://www.inspiredtaste.net/15938/easy-smooth-hummus-recipe/"
+        },
+        {
+            "name": "Fresh Smoothie / Juice Bar Special",
+            "calories": 210,
+            "prep_type": "Restaurant / Takeout",
+            "link": "https://www.google.com/maps/search/Juice+Bar+Smoothie+Near+Me"
         }
     ],
     "Dinner": [
