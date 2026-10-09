@@ -1,5 +1,4 @@
 # main.py
-
 import webbrowser
 import customtkinter as ctk
 
@@ -13,18 +12,35 @@ from calorie_calc import (
 from food_db import FOOD_DATABASE
 from meal_planner import generate_daily_meal_plan
 
+# Application Theme Configuration
 ctk.set_appearance_mode("Dark")
-ctk.set_default_color_theme("blue")
+ctk.set_default_color_theme("dark-blue")
+
+# --- LUXURY BLACK & GOLD PALETTE ---
+BG_DARK = "#090A0F"            # Deep Matte Obsidian
+CARD_BG = "#12141C"            # Midnight Card Surface
+BORDER_GOLD = "#D4AF37"        # Metallic Warm Gold
+GOLD_PRIMARY = "#E5C158"       # Bright Premium Gold
+GOLD_HOVER = "#C59B27"         # Darker Gold for Hover States
+TEXT_WHITE = "#FFFFFF"         # Primary Pure White Text
+TEXT_GOLD = "#F3E5AB"          # Subtle Champagne Gold Accent
+SUBTEXT_MUTED = "#8A8F9E"      # Premium Muted Gray
+CARD_INNER_BG = "#1A1D28"      # Contrast Inner Slot Card
+
+# --- SLEEK TYPOGRAPHY & CALLIGRAPHY STYLES ---
+FONT_TITLE = ("Cinzel", "Georgia")           # Calligraphic/Serif Luxury Titles
+FONT_SERIF = ("Georgia", "Baskerville")         # Elegant Calligraphic Subtitles & Headers
+FONT_BODY = ("Segoe UI", "Helvetica")          # Clean Sans-Serif for readable inputs
 
 
 class AvyroApp(ctk.CTk):
-
     def __init__(self):
         super().__init__()
 
-        self.title("Avyro - Eat. Move. Evolve.")
-        self.geometry("550x720")
+        self.title("AVYRO — Exclusive Nutrition & Wellness")
+        self.geometry("540x820")
         self.resizable(False, False)
+        self.configure(fg_color=BG_DARK)
 
         self.user_data = {
             "name": "",
@@ -33,7 +49,7 @@ class AvyroApp(ctk.CTk):
             "gender": "Male",
             "height": 170.0,
             "weight": 65.0,
-            "target": "Maintenance",
+            "target": "Maintain Weight",
             "activity": "moderate",
             "outside_freq": "a",
             "prep_pref": "a",
@@ -42,7 +58,12 @@ class AvyroApp(ctk.CTk):
 
         self.previous_meal_plan = {}
 
-        self.container = ctk.CTkFrame(self)
+        # Main Scrollable Container
+        self.container = ctk.CTkScrollableFrame(
+            self, 
+            fg_color=BG_DARK,
+            corner_radius=0
+        )
         self.container.pack(fill="both", expand=True, padx=20, pady=20)
 
         self.show_window_1_registration()
@@ -51,49 +72,94 @@ class AvyroApp(ctk.CTk):
         for widget in self.container.winfo_children():
             widget.destroy()
 
+    def add_contact_us_footer(self):
+        """Adds a sleek, calligraphic 'Contact Us' footer at the end of every page."""
+        footer_card = ctk.CTkFrame(
+            self.container, 
+            fg_color=CARD_BG, 
+            corner_radius=14, 
+            border_width=1, 
+            border_color="#2D291E"
+        )
+        footer_card.pack(fill="x", pady=(20, 10), ipadx=10, ipady=12)
+
+        ctk.CTkLabel(
+            footer_card, 
+            text="— CONTACT US —", 
+            font=ctk.CTkFont(family=FONT_SERIF[0], size=13, weight="bold"), 
+            text_color=GOLD_PRIMARY
+        ).pack(pady=(2, 4))
+
+        ctk.CTkLabel(
+            footer_card, 
+            text="📞 +1 (800) 555-AVYRO  |  ✉️ support@avyro.com", 
+            font=ctk.CTkFont(family=FONT_SERIF[0], size=11), 
+            text_color=TEXT_GOLD
+        ).pack(pady=(0, 2))
+
+        ctk.CTkLabel(
+            footer_card, 
+            text="Avyro Concierge Wellness • Available 24/7 for Members", 
+            font=ctk.CTkFont(family=FONT_SERIF[0], size=10, slant="italic"), 
+            text_color=SUBTEXT_MUTED
+        ).pack(pady=(0, 2))
+
     # ==========================================
     # WINDOW 1: Registration
     # ==========================================
     def show_window_1_registration(self):
         self.clear_container()
 
-        ctk.CTkLabel(
-            self.container,
-            text="Avyro",
-            font=ctk.CTkFont(size=30, weight="bold"),
-        ).pack(pady=(20, 5))
-        ctk.CTkLabel(
-            self.container,
-            text="Eat. Move. Evolve.",
-            font=ctk.CTkFont(size=14, slant="italic"),
-        ).pack(pady=(0, 20))
-
-        frame = ctk.CTkFrame(self.container)
-        frame.pack(fill="x", padx=20, pady=10)
+        # Header Branding Card
+        header_card = ctk.CTkFrame(self.container, fg_color=CARD_BG, corner_radius=18, border_width=1, border_color=BORDER_GOLD)
+        header_card.pack(fill="x", pady=(0, 20), ipady=18)
 
         ctk.CTkLabel(
-            frame,
-            text="Welcome! Let's get started.",
-            font=ctk.CTkFont(size=16, weight="bold"),
-        ).pack(pady=15)
+            header_card, text="AVYRO", 
+            font=ctk.CTkFont(family=FONT_TITLE[0], size=38, weight="bold"), 
+            text_color=GOLD_PRIMARY
+        ).pack(pady=(12, 2))
 
+        ctk.CTkLabel(
+            header_card, text="E A T   •   M O V E   •   E V O L V E", 
+            font=ctk.CTkFont(family=FONT_SERIF[0], size=11, weight="bold", slant="italic"), 
+            text_color=TEXT_GOLD
+        ).pack(pady=(0, 8))
+
+        # Registration Card
+        card = ctk.CTkFrame(self.container, fg_color=CARD_BG, corner_radius=18, border_width=1, border_color="#2D291E")
+        card.pack(fill="x", pady=10, ipadx=15, ipady=20)
+
+        ctk.CTkLabel(
+            card, text="WELCOME TO AVYRO", 
+            font=ctk.CTkFont(family=FONT_SERIF[0], size=17, weight="bold"),
+            text_color=TEXT_WHITE
+        ).pack(pady=(5, 18))
+
+        ctk.CTkLabel(card, text="FULL NAME", font=ctk.CTkFont(family=FONT_SERIF[0], size=11, weight="bold"), text_color=TEXT_GOLD).pack(anchor="w", padx=15)
         self.entry_name = ctk.CTkEntry(
-            frame, placeholder_text="Full Name", width=300
+            card, placeholder_text="Enter your full name", width=400, height=42, 
+            corner_radius=10, fg_color=CARD_INNER_BG, border_color=BORDER_GOLD, border_width=1, text_color=TEXT_WHITE,
+            font=ctk.CTkFont(family=FONT_BODY[0], size=12)
         )
-        self.entry_name.pack(pady=10)
+        self.entry_name.pack(pady=(4, 16))
 
+        ctk.CTkLabel(card, text="EMAIL OR PHONE", font=ctk.CTkFont(family=FONT_SERIF[0], size=11, weight="bold"), text_color=TEXT_GOLD).pack(anchor="w", padx=15)
         self.entry_email = ctk.CTkEntry(
-            frame, placeholder_text="Email or Phone Number", width=300
+            card, placeholder_text="Enter email or phone number", width=400, height=42, 
+            corner_radius=10, fg_color=CARD_INNER_BG, border_color=BORDER_GOLD, border_width=1, text_color=TEXT_WHITE,
+            font=ctk.CTkFont(family=FONT_BODY[0], size=12)
         )
-        self.entry_email.pack(pady=10)
+        self.entry_email.pack(pady=(4, 24))
 
         ctk.CTkButton(
-            self.container,
-            text="Next Step ➔",
-            width=200,
-            height=40,
-            command=self.save_w1_and_next,
-        ).pack(pady=30)
+            card, text="BEGIN MEMBERSHIP →", width=400, height=46, 
+            corner_radius=10, fg_color=GOLD_PRIMARY, hover_color=GOLD_HOVER,
+            text_color="#000000", font=ctk.CTkFont(family=FONT_SERIF[0], size=13, weight="bold"),
+            command=self.save_w1_and_next
+        ).pack(pady=10)
+
+        self.add_contact_us_footer()
 
     def save_w1_and_next(self):
         self.user_data["name"] = self.entry_name.get().strip() or "User"
@@ -106,58 +172,57 @@ class AvyroApp(ctk.CTk):
     def show_window_2_metrics(self):
         self.clear_container()
 
-        ctk.CTkLabel(
-            self.container,
-            text="Physical Metrics",
-            font=ctk.CTkFont(size=22, weight="bold"),
-        ).pack(pady=(15, 15))
+        card = ctk.CTkFrame(self.container, fg_color=CARD_BG, corner_radius=18, border_width=1, border_color=BORDER_GOLD)
+        card.pack(fill="x", pady=10, ipadx=15, ipady=20)
 
-        ctk.CTkLabel(self.container, text="Age (years):").pack(anchor="w", padx=40)
-        self.entry_age = ctk.CTkEntry(self.container, width=300)
+        ctk.CTkLabel(card, text="BODY METRICS & PROFILE", font=ctk.CTkFont(family=FONT_SERIF[0], size=18, weight="bold"), text_color=GOLD_PRIMARY).pack(pady=(10, 18))
+
+        # Age
+        ctk.CTkLabel(card, text="AGE (YEARS)", font=ctk.CTkFont(family=FONT_SERIF[0], size=10, weight="bold"), text_color=TEXT_GOLD).pack(anchor="w", padx=15)
+        self.entry_age = ctk.CTkEntry(card, width=400, height=40, corner_radius=8, fg_color=CARD_INNER_BG, border_color="#332E21", border_width=1, text_color=TEXT_WHITE, font=ctk.CTkFont(family=FONT_BODY[0], size=12))
         self.entry_age.insert(0, "20")
-        self.entry_age.pack(pady=(0, 10))
+        self.entry_age.pack(pady=(4, 14))
 
-        ctk.CTkLabel(self.container, text="Gender:").pack(anchor="w", padx=40)
+        # Gender
+        ctk.CTkLabel(card, text="GENDER", font=ctk.CTkFont(family=FONT_SERIF[0], size=10, weight="bold"), text_color=TEXT_GOLD).pack(anchor="w", padx=15)
         self.gender_var = ctk.StringVar(value="Male")
         ctk.CTkSegmentedButton(
-            self.container,
-            values=["Male", "Female"],
-            variable=self.gender_var,
-            width=300,
-        ).pack(pady=(0, 10))
+            card, values=["Male", "Female"], variable=self.gender_var, 
+            width=400, height=38, selected_color=GOLD_PRIMARY, selected_hover_color=GOLD_HOVER,
+            unselected_color=CARD_INNER_BG, text_color=TEXT_WHITE, font=ctk.CTkFont(family=FONT_SERIF[0], size=12, weight="bold")
+        ).pack(pady=(4, 14))
 
-        ctk.CTkLabel(self.container, text="Height (cm):").pack(
-            anchor="w", padx=40
-        )
-        self.entry_height = ctk.CTkEntry(self.container, width=300)
+        # Height
+        ctk.CTkLabel(card, text="HEIGHT (CM)", font=ctk.CTkFont(family=FONT_SERIF[0], size=10, weight="bold"), text_color=TEXT_GOLD).pack(anchor="w", padx=15)
+        self.entry_height = ctk.CTkEntry(card, width=400, height=40, corner_radius=8, fg_color=CARD_INNER_BG, border_color="#332E21", border_width=1, text_color=TEXT_WHITE, font=ctk.CTkFont(family=FONT_BODY[0], size=12))
         self.entry_height.insert(0, "170")
-        self.entry_height.pack(pady=(0, 10))
+        self.entry_height.pack(pady=(4, 14))
 
-        ctk.CTkLabel(self.container, text="Weight (kg):").pack(
-            anchor="w", padx=40
-        )
-        self.entry_weight = ctk.CTkEntry(self.container, width=300)
+        # Weight
+        ctk.CTkLabel(card, text="WEIGHT (KG)", font=ctk.CTkFont(family=FONT_SERIF[0], size=10, weight="bold"), text_color=TEXT_GOLD).pack(anchor="w", padx=15)
+        self.entry_weight = ctk.CTkEntry(card, width=400, height=40, corner_radius=8, fg_color=CARD_INNER_BG, border_color="#332E21", border_width=1, text_color=TEXT_WHITE, font=ctk.CTkFont(family=FONT_BODY[0], size=12))
         self.entry_weight.insert(0, "65")
-        self.entry_weight.pack(pady=(0, 10))
+        self.entry_weight.pack(pady=(4, 14))
 
-        ctk.CTkLabel(self.container, text="Your Target Goal:").pack(
-            anchor="w", padx=40
-        )
+        # Target Goal
+        ctk.CTkLabel(card, text="PRIMARY GOAL", font=ctk.CTkFont(family=FONT_SERIF[0], size=10, weight="bold"), text_color=TEXT_GOLD).pack(anchor="w", padx=15)
         self.target_var = ctk.StringVar(value="Maintain Weight")
         ctk.CTkOptionMenu(
-            self.container,
-            values=["Weight Loss", "Maintain Weight", "Weight Gain"],
-            variable=self.target_var,
-            width=300,
-        ).pack(pady=(0, 15))
+            card, values=["Weight Loss", "Maintain Weight", "Weight Gain"], 
+            variable=self.target_var, width=400, height=40, corner_radius=8,
+            fg_color=CARD_INNER_BG, button_color=GOLD_PRIMARY, button_hover_color=GOLD_HOVER,
+            text_color=TEXT_WHITE, dropdown_fg_color=CARD_BG, dropdown_hover_color="#2A2415",
+            font=ctk.CTkFont(family=FONT_SERIF[0], size=12)
+        ).pack(pady=(4, 24))
 
         ctk.CTkButton(
-            self.container,
-            text="Continue ➔",
-            width=200,
-            height=40,
-            command=self.save_w2_and_next,
-        ).pack(pady=15)
+            card, text="SAVE & CONTINUE →", width=400, height=46, corner_radius=10, 
+            fg_color=GOLD_PRIMARY, hover_color=GOLD_HOVER, text_color="#000000",
+            font=ctk.CTkFont(family=FONT_SERIF[0], size=13, weight="bold"),
+            command=self.save_w2_and_next
+        ).pack(pady=10)
+
+        self.add_contact_us_footer()
 
     def save_w2_and_next(self):
         try:
@@ -168,66 +233,62 @@ class AvyroApp(ctk.CTk):
             self.user_data["target"] = self.target_var.get()
         except ValueError:
             pass
-
         self.show_window_3_questionnaire()
 
     # ==========================================
-    # WINDOW 3: Questionnaire
+    # WINDOW 3: Lifestyle Questionnaire
     # ==========================================
     def show_window_3_questionnaire(self):
         self.clear_container()
 
-        ctk.CTkLabel(
-            self.container,
-            text="Lifestyle Questionnaire",
-            font=ctk.CTkFont(size=20, weight="bold"),
-        ).pack(pady=(10, 15))
+        card = ctk.CTkFrame(self.container, fg_color=CARD_BG, corner_radius=18, border_width=1, border_color=BORDER_GOLD)
+        card.pack(fill="x", pady=10, ipadx=15, ipady=20)
 
-        ctk.CTkLabel(
-            self.container, text="1. Daily Activity / Workout Frequency:"
-        ).pack(anchor="w", padx=30)
+        ctk.CTkLabel(card, text="LIFESTYLE ASSESSMENTS", font=ctk.CTkFont(family=FONT_SERIF[0], size=18, weight="bold"), text_color=GOLD_PRIMARY).pack(pady=(10, 18))
+
+        # Q1 Activity
+        ctk.CTkLabel(card, text="1. DAILY WORKOUT FREQUENCY", font=ctk.CTkFont(family=FONT_SERIF[0], size=10, weight="bold"), text_color=TEXT_GOLD).pack(anchor="w", padx=15)
         self.activity_var = ctk.StringVar(value="moderate")
         ctk.CTkOptionMenu(
-            self.container,
-            values=["sedentary", "light", "moderate", "active", "N/A"],
-            variable=self.activity_var,
-            width=300,
-        ).pack(pady=(0, 15))
+            card, values=["sedentary", "light", "moderate", "active", "N/A"], 
+            variable=self.activity_var, width=400, height=40, corner_radius=8,
+            fg_color=CARD_INNER_BG, button_color=GOLD_PRIMARY, button_hover_color=GOLD_HOVER,
+            text_color=TEXT_WHITE, dropdown_fg_color=CARD_BG, font=ctk.CTkFont(family=FONT_SERIF[0], size=12)
+        ).pack(pady=(4, 16))
 
-        ctk.CTkLabel(
-            self.container, text="2. How is your energy/mood today?"
-        ).pack(anchor="w", padx=30)
+        # Q2 Mood
+        ctk.CTkLabel(card, text="2. DAILY ENERGY & MOOD", font=ctk.CTkFont(family=FONT_SERIF[0], size=10, weight="bold"), text_color=TEXT_GOLD).pack(anchor="w", padx=15)
         self.mood_var = ctk.StringVar(value="Energetic")
         ctk.CTkOptionMenu(
-            self.container,
-            values=["Energetic", "Normal", "Tired", "Stressed"],
-            variable=self.mood_var,
-            width=300,
-        ).pack(pady=(0, 15))
+            card, values=["Energetic", "Normal", "Tired", "Stressed"], 
+            variable=self.mood_var, width=400, height=40, corner_radius=8,
+            fg_color=CARD_INNER_BG, button_color=GOLD_PRIMARY, button_hover_color=GOLD_HOVER,
+            text_color=TEXT_WHITE, dropdown_fg_color=CARD_BG, font=ctk.CTkFont(family=FONT_SERIF[0], size=12)
+        ).pack(pady=(4, 16))
 
-        ctk.CTkLabel(
-            self.container, text="3. How often do you eat outside?"
-        ).pack(anchor="w", padx=30)
+        # Q3 Outside Eating
+        ctk.CTkLabel(card, text="3. OUTSIDE DINING FREQUENCY", font=ctk.CTkFont(family=FONT_SERIF[0], size=10, weight="bold"), text_color=TEXT_GOLD).pack(anchor="w", padx=15)
         self.outside_var = ctk.StringVar(value="a) Once a week")
         ctk.CTkOptionMenu(
-            self.container,
-            values=[
+            card, values=[
                 "a) Once a week",
                 "b) Twice/Thrice a week",
                 "c) Four times a week",
-                "d) 5+ times a week",
-            ],
-            variable=self.outside_var,
-            width=300,
-        ).pack(pady=(0, 20))
+                "d) 5+ times a week"
+            ], 
+            variable=self.outside_var, width=400, height=40, corner_radius=8,
+            fg_color=CARD_INNER_BG, button_color=GOLD_PRIMARY, button_hover_color=GOLD_HOVER,
+            text_color=TEXT_WHITE, dropdown_fg_color=CARD_BG, font=ctk.CTkFont(family=FONT_SERIF[0], size=12)
+        ).pack(pady=(4, 24))
 
         ctk.CTkButton(
-            self.container,
-            text="Next Step ➔",
-            width=200,
-            height=40,
-            command=self.save_w3_and_next,
+            card, text="NEXT STEP →", width=400, height=46, corner_radius=10, 
+            fg_color=GOLD_PRIMARY, hover_color=GOLD_HOVER, text_color="#000000",
+            font=ctk.CTkFont(family=FONT_SERIF[0], size=13, weight="bold"),
+            command=self.save_w3_and_next
         ).pack(pady=10)
+
+        self.add_contact_us_footer()
 
     def save_w3_and_next(self):
         self.user_data["activity"] = self.activity_var.get()
@@ -240,102 +301,77 @@ class AvyroApp(ctk.CTk):
     def show_window_4_meal_prep(self):
         self.clear_container()
 
-        ctk.CTkLabel(
-            self.container,
-            text="Meal Preparation Style",
-            font=ctk.CTkFont(size=20, weight="bold"),
-        ).pack(pady=(15, 10))
+        card = ctk.CTkFrame(self.container, fg_color=CARD_BG, corner_radius=18, border_width=1, border_color=BORDER_GOLD)
+        card.pack(fill="x", pady=10, ipadx=15, ipady=20)
 
-        ctk.CTkLabel(
-            self.container,
-            text="How do you prefer to get your meals mostly?",
-            font=ctk.CTkFont(size=13),
-        ).pack(pady=(0, 15))
+        ctk.CTkLabel(card, text="PREPARATION PREFERENCE", font=ctk.CTkFont(family=FONT_SERIF[0], size=18, weight="bold"), text_color=GOLD_PRIMARY).pack(pady=(10, 4))
+        ctk.CTkLabel(card, text="Select your preferred meal arrangement strategy", font=ctk.CTkFont(family=FONT_SERIF[0], size=11, slant="italic"), text_color=SUBTEXT_MUTED).pack(pady=(0, 18))
 
         self.prep_var = ctk.StringVar(value="a")
-
         opts = [
-            ("a) Fresh cooking", "a"),
-            ("b) No-cook / Assembly only", "b"),
-            ("c) Meal delivery / Takeout", "c"),
-            ("d) Grocery store grab & go", "d"),
+            ("Fresh cooking", "a"),
+            ("No-cook / Assembly only", "b"),
+            ("Meal delivery / Takeout", "c"),
+            ("Grocery store grab & go", "d"),
         ]
 
         for text, val in opts:
             ctk.CTkRadioButton(
-                self.container,
-                text=text,
-                value=val,
-                variable=self.prep_var,
-            ).pack(anchor="w", padx=50, pady=10)
+                card, text=text, value=val, variable=self.prep_var,
+                fg_color=GOLD_PRIMARY, hover_color=GOLD_HOVER, text_color=TEXT_WHITE,
+                font=ctk.CTkFont(family=FONT_SERIF[0], size=13)
+            ).pack(anchor="w", padx=30, pady=10)
 
         ctk.CTkButton(
-            self.container,
-            text="Select Food Options ➔",
-            width=200,
-            height=40,
-            command=self.save_w4_and_next,
-        ).pack(pady=30)
+            card, text="SELECT FOOD CUISINES →", width=400, height=46, corner_radius=10, 
+            fg_color=GOLD_PRIMARY, hover_color=GOLD_HOVER, text_color="#000000",
+            font=ctk.CTkFont(family=FONT_SERIF[0], size=13, weight="bold"),
+            command=self.save_w4_and_next
+        ).pack(pady=(24, 10))
+
+        self.add_contact_us_footer()
 
     def save_w4_and_next(self):
         self.user_data["prep_pref"] = self.prep_var.get()
         self.show_window_5_food_selection()
 
     # ==========================================
-    # WINDOW 5: Food Preferences Checklist (NEW)
+    # WINDOW 5: Food Preferences Checklist
     # ==========================================
     def show_window_5_food_selection(self):
         self.clear_container()
 
-        ctk.CTkLabel(
-            self.container,
-            text="Preferred Food Options",
-            font=ctk.CTkFont(size=20, weight="bold"),
-        ).pack(pady=(10, 5))
+        ctk.CTkLabel(self.container, text="CURATED DIETARY PREFERENCES", font=ctk.CTkFont(family=FONT_SERIF[0], size=18, weight="bold"), text_color=GOLD_PRIMARY).pack(pady=(5, 2))
+        ctk.CTkLabel(self.container, text="Select the items you wish to include in your menu:", font=ctk.CTkFont(family=FONT_SERIF[0], size=11, slant="italic"), text_color=SUBTEXT_MUTED).pack(pady=(0, 12))
 
-        ctk.CTkLabel(
-            self.container,
-            text="Check the items you enjoy eating:",
-            font=ctk.CTkFont(size=12),
-        ).pack(pady=(0, 10))
-
-        # Scrollable area for checkable food items
-        scroll_frame = ctk.CTkScrollableFrame(
-            self.container, width=450, height=380
-        )
+        scroll_frame = ctk.CTkScrollableFrame(self.container, width=440, height=360, fg_color=CARD_BG, corner_radius=14, border_width=1, border_color=BORDER_GOLD)
         scroll_frame.pack(pady=10)
 
         self.checkbox_vars = {}
 
         for category, items in FOOD_DATABASE.items():
-            cat_label = ctk.CTkLabel(
-                scroll_frame,
-                text=f"--- {category} ---",
-                font=ctk.CTkFont(size=14, weight="bold"),
-            )
-            cat_label.pack(anchor="w", pady=(10, 5))
-
+            ctk.CTkLabel(scroll_frame, text=f"• {category.upper()} •", font=ctk.CTkFont(family=FONT_SERIF[0], size=13, weight="bold"), text_color=GOLD_PRIMARY).pack(anchor="w", pady=(12, 6), padx=10)
             for food in items:
-                var = ctk.BooleanVar(value=True)  # Default checked
+                var = ctk.BooleanVar(value=True)
                 chk = ctk.CTkCheckBox(
-                    scroll_frame, text=food["name"], variable=var
+                    scroll_frame, text=food["name"], variable=var,
+                    fg_color=GOLD_PRIMARY, hover_color=GOLD_HOVER, text_color=TEXT_WHITE,
+                    border_color=BORDER_GOLD, font=ctk.CTkFont(family=FONT_BODY[0], size=12)
                 )
-                chk.pack(anchor="w", padx=20, pady=3)
+                chk.pack(anchor="w", padx=25, pady=4)
                 self.checkbox_vars[food["name"]] = var
 
         ctk.CTkButton(
-            self.container,
-            text="Generate Meal Plan ➔",
-            width=200,
-            height=40,
-            command=self.save_w5_and_next,
+            self.container, text="GENERATE EXCLUSIVE MEAL PLAN ✨", width=460, height=46, corner_radius=10, 
+            fg_color=GOLD_PRIMARY, hover_color=GOLD_HOVER, text_color="#000000",
+            font=ctk.CTkFont(family=FONT_SERIF[0], size=13, weight="bold"),
+            command=self.save_w5_and_next
         ).pack(pady=15)
 
+        self.add_contact_us_footer()
+
     def save_w5_and_next(self):
-        # Store user's checked foods
-        selected = [
-            name for name, var in self.checkbox_vars.items() if var.get()
-        ]
+        selected = [name for name, var in self.checkbox_vars.items() if var.get()]
         self.user_data["selected_foods"] = selected
         self.show_window_6_daily_plan()
 
@@ -345,83 +381,78 @@ class AvyroApp(ctk.CTk):
     def show_window_6_daily_plan(self):
         self.clear_container()
 
-        bmi, bmi_cat = calculate_bmi(
-            self.user_data["weight"], self.user_data["height"]
-        )
-        bmr = calculate_bmr(
-            self.user_data["gender"],
-            self.user_data["weight"],
-            self.user_data["height"],
-            self.user_data["age"],
-        )
+        bmi, bmi_cat = calculate_bmi(self.user_data["weight"], self.user_data["height"])
+        bmr = calculate_bmr(self.user_data["gender"], self.user_data["weight"], self.user_data["height"], self.user_data["age"])
         tdee = calculate_tdee(bmr, self.user_data["activity"])
         target_cal = get_target_calories(tdee, self.user_data["target"])
         split = get_meal_calorie_split(target_cal)
 
-        meal_plan = generate_daily_meal_plan(
-            self.user_data["prep_pref"], self.previous_meal_plan
-        )
+        meal_plan = generate_daily_meal_plan(self.user_data["prep_pref"], self.previous_meal_plan)
         self.previous_meal_plan = meal_plan
 
-        header_text = f"Hello, {self.user_data['name']}! | BMI: {bmi} ({bmi_cat})\nTarget Calories: {target_cal} kcal/day"
-        ctk.CTkLabel(
-            self.container,
-            text=header_text,
-            font=ctk.CTkFont(size=14, weight="bold"),
-        ).pack(pady=(5, 10))
+        # Header Badge Card
+        header_card = ctk.CTkFrame(self.container, fg_color=CARD_BG, corner_radius=16, border_width=1, border_color=BORDER_GOLD)
+        header_card.pack(fill="x", pady=(0, 12), ipadx=12, ipady=12)
 
-        schedule_frame = ctk.CTkFrame(self.container, fg_color="#2b2b2b")
-        schedule_frame.pack(fill="x", padx=10, pady=5)
+        ctk.CTkLabel(header_card, text=f"WELCOME, {self.user_data['name'].upper()}", font=ctk.CTkFont(family=FONT_SERIF[0], size=18, weight="bold"), text_color=TEXT_WHITE).pack(anchor="w", padx=10)
         ctk.CTkLabel(
-            schedule_frame,
-            text="⏰ Recommended Timings: Wake Up: 07:00 AM | Sleep: 10:30 PM",
-            font=ctk.CTkFont(size=11),
-        ).pack(pady=5)
+            header_card, 
+            text=f"BMI: {bmi} ({bmi_cat})   |   TARGET: {target_cal} kcal/day", 
+            font=ctk.CTkFont(family=FONT_SERIF[0], size=12, weight="bold"), text_color=GOLD_PRIMARY
+        ).pack(anchor="w", padx=10, pady=(3, 0))
 
+        # Schedule banner
+        sched_card = ctk.CTkFrame(self.container, fg_color=CARD_INNER_BG, corner_radius=10, border_width=1, border_color="#2A2E3D")
+        sched_card.pack(fill="x", pady=6, ipady=6)
+        ctk.CTkLabel(
+            sched_card, 
+            text="👑 TIMING SCHEDULE: Wake: 07:00 AM  •  Sleep: 10:30 PM", 
+            font=ctk.CTkFont(family=FONT_SERIF[0], size=11, slant="italic"), text_color=TEXT_GOLD
+        ).pack()
+
+        # Slots Loop
         slots = [
-            ("B - Breakfast", "08:30 AM", "Breakfast"),
-            ("L - Lunch", "01:30 PM", "Lunch"),
-            ("S - Snacks", "05:00 PM", "Snacks"),
-            ("D - Dinner", "08:00 PM", "Dinner"),
+            ("🍳 BREAKFAST", "08:30 AM", "Breakfast"),
+            ("🥗 LUNCH", "01:30 PM", "Lunch"),
+            ("🍎 SNACKS", "05:00 PM", "Snacks"),
+            ("🍽️ DINNER", "08:00 PM", "Dinner"),
         ]
 
-        for code, time, slot_key in slots:
+        for code, time_str, slot_key in slots:
             item = meal_plan[slot_key]
-            slot_frame = ctk.CTkFrame(self.container)
-            slot_frame.pack(fill="x", padx=10, pady=4)
+            
+            slot_card = ctk.CTkFrame(self.container, fg_color=CARD_BG, corner_radius=14, border_width=1, border_color="#2A2415")
+            slot_card.pack(fill="x", pady=6, ipadx=12, ipady=12)
 
-            left_text = f"{code} ({time}):\n{item['name']}"
-            ctk.CTkLabel(
-                slot_frame,
-                text=left_text,
-                justify="left",
-                font=ctk.CTkFont(size=12, weight="bold"),
-            ).pack(side="left", padx=10, pady=5)
+            # Top Row
+            top_frame = ctk.CTkFrame(slot_card, fg_color="transparent")
+            top_frame.pack(fill="x", expand=True)
 
-            right_text = f"~{item['calories']} kcal\n(Goal: {split[slot_key]})"
-            ctk.CTkLabel(
-                slot_frame,
-                text=right_text,
-                justify="right",
-                font=ctk.CTkFont(size=11),
-            ).pack(side="right", padx=10, pady=5)
+            ctk.CTkLabel(top_frame, text=f"{code} ({time_str})", font=ctk.CTkFont(family=FONT_SERIF[0], size=12, weight="bold"), text_color=TEXT_GOLD).pack(side="left")
+            ctk.CTkLabel(top_frame, text=f"~{item['calories']} kcal (Goal: {split[slot_key]})", font=ctk.CTkFont(family=FONT_BODY[0], size=10), text_color=SUBTEXT_MUTED).pack(side="right")
+
+            # Bottom Row
+            bottom_frame = ctk.CTkFrame(slot_card, fg_color="transparent")
+            bottom_frame.pack(fill="x", expand=True, pady=(8, 0))
+
+            ctk.CTkLabel(bottom_frame, text=item["name"], font=ctk.CTkFont(family=FONT_SERIF[0], size=13, weight="bold"), text_color=TEXT_WHITE, wraplength=280, justify="left").pack(side="left")
 
             ctk.CTkButton(
-                slot_frame,
-                text="🔗 Recipe",
-                width=70,
-                height=24,
-                font=ctk.CTkFont(size=10),
-                command=lambda url=item["link"]: webbrowser.open(url),
-            ).pack(side="right", padx=5)
+                bottom_frame, text="RECIPE 🔗", width=80, height=26, corner_radius=6,
+                fg_color=GOLD_PRIMARY, hover_color=GOLD_HOVER, text_color="#000000",
+                font=ctk.CTkFont(family=FONT_SERIF[0], size=10, weight="bold"),
+                command=lambda url=item["link"]: webbrowser.open(url)
+            ).pack(side="right")
 
+        # Regenerate Action Button
         ctk.CTkButton(
-            self.container,
-            text="🔄 Regenerate Plan (No Consecutive Repeats)",
-            width=250,
-            height=35,
-            command=self.show_window_6_daily_plan,
+            self.container, text="🔄 REGENERATE EXCLUSIVE MENU", width=460, height=46, corner_radius=10, 
+            fg_color=GOLD_PRIMARY, hover_color=GOLD_HOVER, text_color="#000000",
+            font=ctk.CTkFont(family=FONT_SERIF[0], size=13, weight="bold"),
+            command=self.show_window_6_daily_plan
         ).pack(pady=15)
+
+        self.add_contact_us_footer()
 
 
 if __name__ == "__main__":
