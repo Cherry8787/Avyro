@@ -1,10 +1,10 @@
-# food_db.py
+# ==========================================
+# FILE: food_db.py
+# DESCRIPTION: Comprehensive structured database containing all meal options 
+# mapped strictly to medical conditions (General Wellness, Diabetes, Thyroid, Blood Pressure) and prep styles.
+# ==========================================
 
-# Meal Prep Categories:
-# "Fresh cooking"
-# "Assembly-only"
-# "Restaurant / Takeout"
-# "Grocery grab & go"
+import random
 
 FOOD_DATABASE = {
     "Breakfast": [
@@ -13,68 +13,79 @@ FOOD_DATABASE = {
             "name": "Scrambled Eggs with Whole Wheat Toast",
             "calories": 400,
             "prep_type": "Fresh cooking",
+            "condition": "General Wellness",
             "link": "https://www.bbcgoodfood.com/recipes/perfect-scrambled-eggs"
         },
         {
             "name": "Avocado Toast & Boiled Egg",
             "calories": 380,
             "prep_type": "Fresh cooking",
+            "condition": "General Wellness",
             "link": "https://www.gimmesomeoven.com/avocado-toast-recipe/"
         },
         {
             "name": "Protein Pancake Stack with Maple Syrup",
             "calories": 480,
             "prep_type": "Fresh cooking",
+            "condition": "General Wellness",
             "link": "https://www.eatwell101.com/protein-pancakes-recipe"
         },
         {
-            "name": "Spinach & Mushroom Egg White Omelette",
+            "name": "Low-Sodium Spinach & Mushroom Egg White Omelette",
             "calories": 320,
             "prep_type": "Fresh cooking",
+            "condition": "Blood Pressure",
             "link": "https://www.skinnytaste.com/spinach-and-feta-egg-white-omelet/"
         },
         {
             "name": "Classic Masala Dosa with Sambhar",
             "calories": 390,
             "prep_type": "Fresh cooking",
+            "condition": "General Wellness",
             "link": "https://www.cookwithmanali.com/dosa-recipe/"
         },
         {
             "name": "High-Protein Tofu Scramble with Veggies",
             "calories": 360,
             "prep_type": "Fresh cooking",
+            "condition": "Diabetes",
             "link": "https://minimalistbaker.com/switched-up-tofu-scramble/"
         },
 
         # --- ASSEMBLY-ONLY ---
         {
-            "name": "Oatmeal with Almonds & Berries",
+            "name": "Steel-Cut Oats with Cinnamon & Walnuts",
             "calories": 350,
             "prep_type": "Assembly-only",
+            "condition": "Diabetes",
             "link": "https://www.allrecipes.com/recipe/245228/overnight-oats-with-berries/"
         },
         {
             "name": "Peanut Butter & Banana Chia Pudding",
             "calories": 370,
             "prep_type": "Assembly-only",
+            "condition": "General Wellness",
             "link": "https://www.eatingwell.com/recipe/268388/peanut-butter-banana-chia-pudding/"
         },
         {
             "name": "Cottage Cheese & Honey Fruit Bowl",
             "calories": 310,
             "prep_type": "Assembly-only",
+            "condition": "General Wellness",
             "link": "https://www.thepioneerwoman.com/food-cooking/recipes/a36224328/cottage-cheese-fruit-bowl/"
         },
         {
-            "name": "Greek Yogurt Bowl with Granola & Flaxseeds",
+            "name": "Selenium-Rich Brazil Nut & Greek Yogurt Parfait",
             "calories": 340,
             "prep_type": "Assembly-only",
+            "condition": "Thyroid",
             "link": "https://www.eatthis.com/greek-yogurt-granola-bowl/"
         },
         {
             "name": "Overnight Mango & Coconut Oats",
             "calories": 380,
             "prep_type": "Assembly-only",
+            "condition": "General Wellness",
             "link": "https://www.loveandlemons.com/overnight-oats-recipe/"
         },
 
@@ -83,24 +94,28 @@ FOOD_DATABASE = {
             "name": "Greek Yogurt Parfait with Honey",
             "calories": 300,
             "prep_type": "Grocery grab & go",
+            "condition": "General Wellness",
             "link": "https://www.eatingwell.com/recipe/261623/easy-yogurt-parfait/"
         },
         {
             "name": "Ready-to-Drink High Protein Shake",
             "calories": 280,
             "prep_type": "Grocery grab & go",
+            "condition": "General Wellness",
             "link": "https://www.healthline.com/nutrition/best-protein-shakes"
         },
         {
             "name": "Bakery Whole Grain Breakfast Muffin",
             "calories": 340,
             "prep_type": "Grocery grab & go",
+            "condition": "General Wellness",
             "link": "https://www.sparkpeople.com/myspark/nutrition/ready_breakfast_muffins.asp"
         },
         {
             "name": "Store-Bought Hard Boiled Eggs & Protein Pack",
             "calories": 260,
             "prep_type": "Grocery grab & go",
+            "condition": "General Wellness",
             "link": "https://www.eatthis.com/protein-snack-packs/"
         },
 
@@ -109,18 +124,21 @@ FOOD_DATABASE = {
             "name": "Cafe Breakfast Bagel & Coffee Combo",
             "calories": 420,
             "prep_type": "Restaurant / Takeout",
+            "condition": "General Wellness",
             "link": "https://www.google.com/maps/search/Breakfast+Bagel+Cafe+Near+Me"
         },
         {
             "name": "Diner Omelette & Hashbrown Combo",
             "calories": 520,
             "prep_type": "Restaurant / Takeout",
+            "condition": "General Wellness",
             "link": "https://www.google.com/maps/search/Diner+Breakfast+Omelette+Near+Me"
         },
         {
             "name": "South Indian Idli Sambhar Takeout",
             "calories": 330,
             "prep_type": "Restaurant / Takeout",
+            "condition": "General Wellness",
             "link": "https://www.google.com/maps/search/South+Indian+Idli+Restaurant+Near+Me"
         }
     ],
@@ -131,50 +149,58 @@ FOOD_DATABASE = {
             "name": "Grilled Chicken & Rice Bowl",
             "calories": 550,
             "prep_type": "Fresh cooking",
+            "condition": "General Wellness",
             "link": "https://www.budgetbytes.com/chicken-burrito-bowls/"
         },
         {
-            "name": "Pan-Seared Salmon & Quinoa Salad",
+            "name": "DASH-Diet Herb Grilled Salmon & Asparagus",
             "calories": 520,
             "prep_type": "Fresh cooking",
+            "condition": "Blood Pressure",
             "link": "https://www.cookingclassy.com/pan-seared-salmon-with-lemon-butter-pan-sauce/"
         },
         {
-            "name": "Lentil Curry (Dal) with Brown Rice",
+            "name": "Low-Glycemic Lentil Dal with Brown Rice",
             "calories": 480,
             "prep_type": "Fresh cooking",
+            "condition": "Diabetes",
             "link": "https://www.thekitchn.com/how-to-make-lentil-dal-241517"
         },
         {
             "name": "Grilled Turkey Burger with Sweet Potato Wedges",
             "calories": 580,
             "prep_type": "Fresh cooking",
+            "condition": "General Wellness",
             "link": "https://www.skinnytaste.com/turkey-burgers/"
         },
 
         # --- ASSEMBLY-ONLY ---
         {
-            "name": "Chickpea & Avocado Salad",
+            "name": "Iodine-Support Seaweed & Tofu Salad Bowl",
             "calories": 450,
             "prep_type": "Assembly-only",
+            "condition": "Thyroid",
             "link": "https://www.skinnytaste.com/chickpea-avocado-salad/"
         },
         {
             "name": "Turkey, Avocado & Spinach Wrap",
             "calories": 460,
             "prep_type": "Assembly-only",
+            "condition": "General Wellness",
             "link": "https://www.spendwithpennies.com/turkey-wrap/"
         },
         {
             "name": "Mediterranean Tuna & White Bean Salad",
             "calories": 430,
             "prep_type": "Assembly-only",
+            "condition": "General Wellness",
             "link": "https://www.themediterraneandish.com/tuna-salad-recipe/"
         },
         {
             "name": "Smoked Salmon & Cream Cheese Bagel",
             "calories": 470,
             "prep_type": "Assembly-only",
+            "condition": "General Wellness",
             "link": "https://www.epicurious.com/recipes/food/views/smoked-salmon-and-cream-cheese-bagel"
         },
 
@@ -183,24 +209,28 @@ FOOD_DATABASE = {
             "name": "Readymade Quinoa & Veggie Bowl",
             "calories": 420,
             "prep_type": "Grocery grab & go",
+            "condition": "General Wellness",
             "link": "https://www.loveandlemons.com/quinoa-salad/"
         },
         {
             "name": "Deli Protein Bento Box (Egg, Cheese, Fruit)",
             "calories": 440,
             "prep_type": "Grocery grab & go",
+            "condition": "General Wellness",
             "link": "https://www.eatthis.com/healthy-snack-boxes/"
         },
         {
             "name": "Pre-Packaged Salmon Sushi Set",
             "calories": 490,
             "prep_type": "Grocery grab & go",
+            "condition": "General Wellness",
             "link": "https://www.healthline.com/nutrition/is-sushi-healthy"
         },
         {
             "name": "Store-Bought Chicken Caesar Salad Bowl",
             "calories": 450,
             "prep_type": "Grocery grab & go",
+            "condition": "General Wellness",
             "link": "https://www.eatthis.com/best-store-bought-salads/"
         },
 
@@ -248,15 +278,17 @@ FOOD_DATABASE = {
 
         # --- ASSEMBLY-ONLY ---
         {
-            "name": "Apple Slices with Peanut Butter",
+            "name": "Roasted Pumpkin Seeds & Cinnamon Apple Slices",
             "calories": 220,
             "prep_type": "Assembly-only",
+            "condition": "Thyroid",
             "link": "https://www.eatingwell.com/recipe/250269/apple-with-peanut-butter/"
         },
         {
-            "name": "Hummus with Carrot Sticks & Pita",
+            "name": "Low-Sodium Hummus with Carrot Sticks & Pita",
             "calories": 240,
             "prep_type": "Assembly-only",
+            "condition": "Blood Pressure",
             "link": "https://www.inspiredtaste.net/15938/easy-smooth-hummus-recipe/"
         },
         {
@@ -271,6 +303,7 @@ FOOD_DATABASE = {
             "name": "Mixed Nuts & Dark Chocolate",
             "calories": 200,
             "prep_type": "Grocery grab & go",
+            "condition": "General Wellness",
             "link": "https://www.healthline.com/nutrition/healthy-nuts"
         },
         {
@@ -280,9 +313,10 @@ FOOD_DATABASE = {
             "link": "https://www.eatthis.com/best-protein-bars/"
         },
         {
-            "name": "Roasted Chickpeas Snack Pack",
+            "name": "Cinnamon Spiced Roasted Chickpeas Snack Pack",
             "calories": 210,
             "prep_type": "Grocery grab & go",
+            "condition": "Diabetes",
             "link": "https://www.healthline.com/nutrition/roasted-chickpeas"
         },
         {
@@ -313,18 +347,21 @@ FOOD_DATABASE = {
             "name": "Baked Salmon with Roasted Vegetables",
             "calories": 600,
             "prep_type": "Fresh cooking",
+            "condition": "General Wellness",
             "link": "https://www.delish.com/cooking/recipe-ideas/a22510250/sheet-pan-salmon-recipe/"
         },
         {
-            "name": "Tofu & Stir-Fry Veggies with Rice",
+            "name": "Low-Carb Tofu & Leafy Greens Stir-Fry",
             "calories": 500,
             "prep_type": "Fresh cooking",
+            "condition": "Diabetes",
             "link": "https://minimalistbaker.com/crispy-peanut-tofu-stir-fry/"
         },
         {
-            "name": "Grilled Steak & Garlic Mashed Potatoes",
+            "name": "Potassium-Rich Roasted Turkey & Sweet Potato Mash",
             "calories": 650,
             "prep_type": "Fresh cooking",
+            "condition": "Blood Pressure",
             "link": "https://www.cafedelites.com/garlic-butter-steak-steaks/"
         },
         {
@@ -342,9 +379,10 @@ FOOD_DATABASE = {
             "link": "https://www.cookieandkate.com/best-lentil-soup-recipe/"
         },
         {
-            "name": "Mediterranean Couscous & Feta Bowl",
+            "name": "Zinc-Boosted Mediterranean Couscous & Feta Bowl",
             "calories": 480,
             "prep_type": "Assembly-only",
+            "condition": "Thyroid",
             "link": "https://www.mediterraneanliving.com/mediterranean-couscous-bowl/"
         },
         {
@@ -401,3 +439,51 @@ FOOD_DATABASE = {
         }
     ]
 }
+
+
+def generate_daily_meal_plan(prep_pref="a", medical_condition="General Wellness", previous_meal_plan=None):
+    """
+    Generates daily meal plans strictly filtered by the user's selected medical condition 
+    to ensure personalized condition-based dining.
+    """
+    if previous_meal_plan is None:
+        previous_meal_plan = {}
+
+    PREP_MAPPING = {
+        "a": "Fresh cooking",
+        "b": "Assembly-only",
+        "c": "Restaurant / Takeout",
+        "d": "Grocery grab & go"
+    }
+    target_prep_type = PREP_MAPPING.get(prep_pref, "Fresh cooking")
+    daily_plan = {}
+
+    for slot, available_options in FOOD_DATABASE.items():
+        condition_filtered = [
+            item for item in available_options
+            if item.get("condition", "").lower() == medical_condition.lower()
+        ]
+
+        if not condition_filtered:
+            condition_filtered = [item for item in available_options if item.get("condition") == "General Wellness"]
+
+        filtered_options = [
+            item for item in condition_filtered
+            if item.get("prep_type") == target_prep_type
+        ]
+
+        valid_options = filtered_options if filtered_options else condition_filtered
+
+        if slot in previous_meal_plan and len(valid_options) > 1:
+            yesterday_meal = previous_meal_plan[slot]["name"]
+            valid_options = [item for item in valid_options if item["name"] != yesterday_meal]
+
+        chosen_item = random.choice(valid_options).copy()
+
+        if prep_pref == "c":
+            meal_query = chosen_item['name'].replace(' ', '+')
+            chosen_item["link"] = f"https://www.google.com/maps/search/{meal_query}+Restaurants+Near+Me"
+
+        daily_plan[slot] = chosen_item
+
+    return daily_plan
