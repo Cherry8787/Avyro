@@ -1,7 +1,7 @@
 # ==========================================
 # FILE: food_db.py
 # DESCRIPTION: Comprehensive structured database containing all meal options 
-# mapped strictly to medical conditions (General Wellness, Diabetes, Thyroid, Blood Pressure) and prep styles.
+# mapped strictly to medical conditions and diet types (Veg / Non-Veg).
 # ==========================================
 
 import random
@@ -14,6 +14,7 @@ FOOD_DATABASE = {
             "calories": 400,
             "prep_type": "Fresh cooking",
             "condition": "General Wellness",
+            "diet_type": "Non-Veg",
             "link": "https://www.bbcgoodfood.com/recipes/perfect-scrambled-eggs"
         },
         {
@@ -21,6 +22,7 @@ FOOD_DATABASE = {
             "calories": 380,
             "prep_type": "Fresh cooking",
             "condition": "General Wellness",
+            "diet_type": "Non-Veg",
             "link": "https://www.gimmesomeoven.com/avocado-toast-recipe/"
         },
         {
@@ -28,6 +30,7 @@ FOOD_DATABASE = {
             "calories": 480,
             "prep_type": "Fresh cooking",
             "condition": "General Wellness",
+            "diet_type": "Veg",
             "link": "https://www.eatwell101.com/protein-pancakes-recipe"
         },
         {
@@ -35,6 +38,7 @@ FOOD_DATABASE = {
             "calories": 320,
             "prep_type": "Fresh cooking",
             "condition": "Blood Pressure",
+            "diet_type": "Non-Veg",
             "link": "https://www.skinnytaste.com/spinach-and-feta-egg-white-omelet/"
         },
         {
@@ -42,6 +46,7 @@ FOOD_DATABASE = {
             "calories": 390,
             "prep_type": "Fresh cooking",
             "condition": "General Wellness",
+            "diet_type": "Veg",
             "link": "https://www.cookwithmanali.com/dosa-recipe/"
         },
         {
@@ -49,6 +54,7 @@ FOOD_DATABASE = {
             "calories": 360,
             "prep_type": "Fresh cooking",
             "condition": "Diabetes",
+            "diet_type": "Veg",
             "link": "https://minimalistbaker.com/switched-up-tofu-scramble/"
         },
 
@@ -58,6 +64,7 @@ FOOD_DATABASE = {
             "calories": 350,
             "prep_type": "Assembly-only",
             "condition": "Diabetes",
+            "diet_type": "Veg",
             "link": "https://www.allrecipes.com/recipe/245228/overnight-oats-with-berries/"
         },
         {
@@ -65,6 +72,7 @@ FOOD_DATABASE = {
             "calories": 370,
             "prep_type": "Assembly-only",
             "condition": "General Wellness",
+            "diet_type": "Veg",
             "link": "https://www.eatingwell.com/recipe/268388/peanut-butter-banana-chia-pudding/"
         },
         {
@@ -72,6 +80,7 @@ FOOD_DATABASE = {
             "calories": 310,
             "prep_type": "Assembly-only",
             "condition": "General Wellness",
+            "diet_type": "Veg",
             "link": "https://www.thepioneerwoman.com/food-cooking/recipes/a36224328/cottage-cheese-fruit-bowl/"
         },
         {
@@ -79,6 +88,7 @@ FOOD_DATABASE = {
             "calories": 340,
             "prep_type": "Assembly-only",
             "condition": "Thyroid",
+            "diet_type": "Veg",
             "link": "https://www.eatthis.com/greek-yogurt-granola-bowl/"
         },
         {
@@ -86,6 +96,7 @@ FOOD_DATABASE = {
             "calories": 380,
             "prep_type": "Assembly-only",
             "condition": "General Wellness",
+            "diet_type": "Veg",
             "link": "https://www.loveandlemons.com/overnight-oats-recipe/"
         },
 
@@ -95,6 +106,7 @@ FOOD_DATABASE = {
             "calories": 300,
             "prep_type": "Grocery grab & go",
             "condition": "General Wellness",
+            "diet_type": "Veg",
             "link": "https://www.eatingwell.com/recipe/261623/easy-yogurt-parfait/"
         },
         {
@@ -102,6 +114,7 @@ FOOD_DATABASE = {
             "calories": 280,
             "prep_type": "Grocery grab & go",
             "condition": "General Wellness",
+            "diet_type": "Veg",
             "link": "https://www.healthline.com/nutrition/best-protein-shakes"
         },
         {
@@ -109,6 +122,7 @@ FOOD_DATABASE = {
             "calories": 340,
             "prep_type": "Grocery grab & go",
             "condition": "General Wellness",
+            "diet_type": "Veg",
             "link": "https://www.sparkpeople.com/myspark/nutrition/ready_breakfast_muffins.asp"
         },
         {
@@ -116,6 +130,7 @@ FOOD_DATABASE = {
             "calories": 260,
             "prep_type": "Grocery grab & go",
             "condition": "General Wellness",
+            "diet_type": "Non-Veg",
             "link": "https://www.eatthis.com/protein-snack-packs/"
         },
 
@@ -125,6 +140,7 @@ FOOD_DATABASE = {
             "calories": 420,
             "prep_type": "Restaurant / Takeout",
             "condition": "General Wellness",
+            "diet_type": "Veg",
             "link": "https://www.google.com/maps/search/Breakfast+Bagel+Cafe+Near+Me"
         },
         {
@@ -132,6 +148,7 @@ FOOD_DATABASE = {
             "calories": 520,
             "prep_type": "Restaurant / Takeout",
             "condition": "General Wellness",
+            "diet_type": "Non-Veg",
             "link": "https://www.google.com/maps/search/Diner+Breakfast+Omelette+Near+Me"
         },
         {
@@ -139,6 +156,7 @@ FOOD_DATABASE = {
             "calories": 330,
             "prep_type": "Restaurant / Takeout",
             "condition": "General Wellness",
+            "diet_type": "Veg",
             "link": "https://www.google.com/maps/search/South+Indian+Idli+Restaurant+Near+Me"
         }
     ],
@@ -150,6 +168,7 @@ FOOD_DATABASE = {
             "calories": 550,
             "prep_type": "Fresh cooking",
             "condition": "General Wellness",
+            "diet_type": "Non-Veg",
             "link": "https://www.budgetbytes.com/chicken-burrito-bowls/"
         },
         {
@@ -157,6 +176,7 @@ FOOD_DATABASE = {
             "calories": 520,
             "prep_type": "Fresh cooking",
             "condition": "Blood Pressure",
+            "diet_type": "Non-Veg",
             "link": "https://www.cookingclassy.com/pan-seared-salmon-with-lemon-butter-pan-sauce/"
         },
         {
@@ -164,6 +184,7 @@ FOOD_DATABASE = {
             "calories": 480,
             "prep_type": "Fresh cooking",
             "condition": "Diabetes",
+            "diet_type": "Veg",
             "link": "https://www.thekitchn.com/how-to-make-lentil-dal-241517"
         },
         {
@@ -171,6 +192,7 @@ FOOD_DATABASE = {
             "calories": 580,
             "prep_type": "Fresh cooking",
             "condition": "General Wellness",
+            "diet_type": "Non-Veg",
             "link": "https://www.skinnytaste.com/turkey-burgers/"
         },
 
@@ -180,6 +202,7 @@ FOOD_DATABASE = {
             "calories": 450,
             "prep_type": "Assembly-only",
             "condition": "Thyroid",
+            "diet_type": "Veg",
             "link": "https://www.skinnytaste.com/chickpea-avocado-salad/"
         },
         {
@@ -187,6 +210,7 @@ FOOD_DATABASE = {
             "calories": 460,
             "prep_type": "Assembly-only",
             "condition": "General Wellness",
+            "diet_type": "Non-Veg",
             "link": "https://www.spendwithpennies.com/turkey-wrap/"
         },
         {
@@ -194,6 +218,7 @@ FOOD_DATABASE = {
             "calories": 430,
             "prep_type": "Assembly-only",
             "condition": "General Wellness",
+            "diet_type": "Non-Veg",
             "link": "https://www.themediterraneandish.com/tuna-salad-recipe/"
         },
         {
@@ -201,6 +226,7 @@ FOOD_DATABASE = {
             "calories": 470,
             "prep_type": "Assembly-only",
             "condition": "General Wellness",
+            "diet_type": "Non-Veg",
             "link": "https://www.epicurious.com/recipes/food/views/smoked-salmon-and-cream-cheese-bagel"
         },
 
@@ -210,6 +236,7 @@ FOOD_DATABASE = {
             "calories": 420,
             "prep_type": "Grocery grab & go",
             "condition": "General Wellness",
+            "diet_type": "Veg",
             "link": "https://www.loveandlemons.com/quinoa-salad/"
         },
         {
@@ -217,6 +244,7 @@ FOOD_DATABASE = {
             "calories": 440,
             "prep_type": "Grocery grab & go",
             "condition": "General Wellness",
+            "diet_type": "Non-Veg",
             "link": "https://www.eatthis.com/healthy-snack-boxes/"
         },
         {
@@ -224,6 +252,7 @@ FOOD_DATABASE = {
             "calories": 490,
             "prep_type": "Grocery grab & go",
             "condition": "General Wellness",
+            "diet_type": "Non-Veg",
             "link": "https://www.healthline.com/nutrition/is-sushi-healthy"
         },
         {
@@ -231,6 +260,7 @@ FOOD_DATABASE = {
             "calories": 450,
             "prep_type": "Grocery grab & go",
             "condition": "General Wellness",
+            "diet_type": "Non-Veg",
             "link": "https://www.eatthis.com/best-store-bought-salads/"
         },
 
@@ -239,24 +269,28 @@ FOOD_DATABASE = {
             "name": "Paneer Tikka Wrap",
             "calories": 500,
             "prep_type": "Restaurant / Takeout",
+            "diet_type": "Veg",
             "link": "https://www.google.com/maps/search/Paneer+Tikka+Wrap+Restaurants+Near+Me"
         },
         {
             "name": "Chipotle-Style Chicken Burrito Bowl",
             "calories": 620,
             "prep_type": "Restaurant / Takeout",
+            "diet_type": "Non-Veg",
             "link": "https://www.google.com/maps/search/Burrito+Bowl+Restaurants+Near+Me"
         },
         {
             "name": "Artisan Bakery Club Sandwich",
             "calories": 540,
             "prep_type": "Restaurant / Takeout",
+            "diet_type": "Non-Veg",
             "link": "https://www.google.com/maps/search/Sandwich+Cafe+Near+Me"
         },
         {
             "name": "Japanese Teriyaki Chicken Rice Bowl",
             "calories": 580,
             "prep_type": "Restaurant / Takeout",
+            "diet_type": "Non-Veg",
             "link": "https://www.google.com/maps/search/Teriyaki+Chicken+Bowl+Near+Me"
         }
     ],
@@ -267,12 +301,14 @@ FOOD_DATABASE = {
             "name": "Air-Fried Sweet Potato Wedges",
             "calories": 230,
             "prep_type": "Fresh cooking",
+            "diet_type": "Veg",
             "link": "https://www.gimmesomeoven.com/baked-sweet-potato-fries/"
         },
         {
             "name": "Crispy Baked Garlic Parmesan Chickpeas",
             "calories": 210,
             "prep_type": "Fresh cooking",
+            "diet_type": "Veg",
             "link": "https://www.delish.com/cooking/recipe-ideas/a28629233/roasted-chickpeas-recipe/"
         },
 
@@ -282,6 +318,7 @@ FOOD_DATABASE = {
             "calories": 220,
             "prep_type": "Assembly-only",
             "condition": "Thyroid",
+            "diet_type": "Veg",
             "link": "https://www.eatingwell.com/recipe/250269/apple-with-peanut-butter/"
         },
         {
@@ -289,12 +326,14 @@ FOOD_DATABASE = {
             "calories": 240,
             "prep_type": "Assembly-only",
             "condition": "Blood Pressure",
+            "diet_type": "Veg",
             "link": "https://www.inspiredtaste.net/15938/easy-smooth-hummus-recipe/"
         },
         {
             "name": "Guacamole with Whole Grain Tortilla Chips",
             "calories": 260,
             "prep_type": "Assembly-only",
+            "diet_type": "Veg",
             "link": "https://www.downshiftology.com/recipes/best-ever-guacamole/"
         },
 
@@ -304,12 +343,14 @@ FOOD_DATABASE = {
             "calories": 200,
             "prep_type": "Grocery grab & go",
             "condition": "General Wellness",
+            "diet_type": "Veg",
             "link": "https://www.healthline.com/nutrition/healthy-nuts"
         },
         {
             "name": "High-Protein Energy Bar & Almonds",
             "calories": 250,
             "prep_type": "Grocery grab & go",
+            "diet_type": "Veg",
             "link": "https://www.eatthis.com/best-protein-bars/"
         },
         {
@@ -317,12 +358,15 @@ FOOD_DATABASE = {
             "calories": 210,
             "prep_type": "Grocery grab & go",
             "condition": "Diabetes",
+            "diet_type": "Veg",
             "link": "https://www.healthline.com/nutrition/roasted-chickpeas"
         },
         {
             "name": "Low-Fat String Cheese & Whole Grain Crackers",
             "calories": 180,
             "prep_type": "Grocery grab & go",
+            "condition": "General Wellness",
+            "diet_type": "Veg",
             "link": "https://www.verywellfit.com/healthy-cheese-snacks-4161102"
         },
 
@@ -331,12 +375,14 @@ FOOD_DATABASE = {
             "name": "Fresh Smoothie / Juice Bar Special",
             "calories": 230,
             "prep_type": "Restaurant / Takeout",
+            "diet_type": "Veg",
             "link": "https://www.google.com/maps/search/Juice+Bar+Smoothie+Near+Me"
         },
         {
             "name": "Artisan Espresso & Almond Croissant",
             "calories": 310,
             "prep_type": "Restaurant / Takeout",
+            "diet_type": "Veg",
             "link": "https://www.google.com/maps/search/Bakery+Cafe+Near+Me"
         }
     ],
@@ -348,6 +394,7 @@ FOOD_DATABASE = {
             "calories": 600,
             "prep_type": "Fresh cooking",
             "condition": "General Wellness",
+            "diet_type": "Non-Veg",
             "link": "https://www.delish.com/cooking/recipe-ideas/a22510250/sheet-pan-salmon-recipe/"
         },
         {
@@ -355,6 +402,7 @@ FOOD_DATABASE = {
             "calories": 500,
             "prep_type": "Fresh cooking",
             "condition": "Diabetes",
+            "diet_type": "Veg",
             "link": "https://minimalistbaker.com/crispy-peanut-tofu-stir-fry/"
         },
         {
@@ -362,12 +410,14 @@ FOOD_DATABASE = {
             "calories": 650,
             "prep_type": "Fresh cooking",
             "condition": "Blood Pressure",
+            "diet_type": "Non-Veg",
             "link": "https://www.cafedelites.com/garlic-butter-steak-steaks/"
         },
         {
             "name": "Shrimp & Asparagus Lemon Pasta",
             "calories": 530,
             "prep_type": "Fresh cooking",
+            "diet_type": "Non-Veg",
             "link": "https://www.cookingclassy.com/lemon-garlic-butter-shrimp-pasta/"
         },
 
@@ -376,6 +426,7 @@ FOOD_DATABASE = {
             "name": "Lentil Soup with Multigrain Roll",
             "calories": 460,
             "prep_type": "Assembly-only",
+            "diet_type": "Veg",
             "link": "https://www.cookieandkate.com/best-lentil-soup-recipe/"
         },
         {
@@ -383,12 +434,14 @@ FOOD_DATABASE = {
             "calories": 480,
             "prep_type": "Assembly-only",
             "condition": "Thyroid",
+            "diet_type": "Veg",
             "link": "https://www.mediterraneanliving.com/mediterranean-couscous-bowl/"
         },
         {
             "name": "Caprese Pita Pocket with Pesto",
             "calories": 440,
             "prep_type": "Assembly-only",
+            "diet_type": "Veg",
             "link": "https://www.eatingwell.com/recipe/251348/caprese-pita-pockets/"
         },
 
@@ -397,18 +450,21 @@ FOOD_DATABASE = {
             "name": "Rotisserie Chicken & Salad Meal Kit",
             "calories": 550,
             "prep_type": "Grocery grab & go",
+            "diet_type": "Non-Veg",
             "link": "https://www.eatthis.com/rotisserie-chicken-meals/"
         },
         {
             "name": "Pre-Made Tortellini with Marinara Sauce",
             "calories": 510,
             "prep_type": "Grocery grab & go",
+            "diet_type": "Veg",
             "link": "https://www.verywellfit.com/store-bought-pasta-guide"
         },
         {
             "name": "Store-Bought Creamy Tomato Soup & Grilled Cheese",
             "calories": 520,
             "prep_type": "Grocery grab & go",
+            "diet_type": "Veg",
             "link": "https://www.eatthis.com/best-canned-soups/"
         },
 
@@ -417,37 +473,43 @@ FOOD_DATABASE = {
             "name": "Store-Bought Whole Wheat Veggie Pizza",
             "calories": 580,
             "prep_type": "Restaurant / Takeout",
+            "diet_type": "Veg",
             "link": "https://www.google.com/maps/search/Veggie+Pizza+Restaurants+Near+Me"
         },
         {
             "name": "Authentic Indian Curry & Garlic Naan",
             "calories": 640,
             "prep_type": "Restaurant / Takeout",
+            "diet_type": "Veg",
             "link": "https://www.google.com/maps/search/Indian+Restaurant+Curry+Near+Me"
         },
         {
             "name": "Thai Basil Chicken & Jasmine Rice",
             "calories": 590,
             "prep_type": "Restaurant / Takeout",
+            "diet_type": "Non-Veg",
             "link": "https://www.google.com/maps/search/Thai+Restaurant+Near+Me"
         },
         {
             "name": "Greek Gyro Platter with Rice & Tzatziki",
             "calories": 610,
             "prep_type": "Restaurant / Takeout",
+            "diet_type": "Non-Veg",
             "link": "https://www.google.com/maps/search/Greek+Gyro+Restaurant+Near+Me"
         }
     ]
 }
 
 
-def generate_daily_meal_plan(prep_pref="a", medical_condition="General Wellness", previous_meal_plan=None):
+def generate_daily_meal_plan(prep_pref="a", medical_condition="General Wellness", allowed_diet_types=None, previous_meal_plan=None):
     """
-    Generates daily meal plans strictly filtered by the user's selected medical condition 
-    to ensure personalized condition-based dining.
+    Generates daily meal plans filtered by medical condition, prep preference, and allowed diet types (Veg / Non-Veg).
     """
     if previous_meal_plan is None:
         previous_meal_plan = {}
+    
+    if allowed_diet_types is None:
+        allowed_diet_types = ["Veg", "Non-Veg"]
 
     PREP_MAPPING = {
         "a": "Fresh cooking",
@@ -459,21 +521,31 @@ def generate_daily_meal_plan(prep_pref="a", medical_condition="General Wellness"
     daily_plan = {}
 
     for slot, available_options in FOOD_DATABASE.items():
+        # 1. Filter by Medical Condition
         condition_filtered = [
             item for item in available_options
             if item.get("condition", "").lower() == medical_condition.lower()
         ]
-
         if not condition_filtered:
-            condition_filtered = [item for item in available_options if item.get("condition") == "General Wellness"]
+            condition_filtered = [item for item in available_options if item.get("condition", "General Wellness") == "General Wellness"]
 
-        filtered_options = [
+        # 2. Filter by Allowed Diet Types (Veg / Non-Veg)
+        diet_filtered = [
             item for item in condition_filtered
+            if item.get("diet_type", "Veg") in allowed_diet_types
+        ]
+        if not diet_filtered:
+            diet_filtered = condition_filtered
+
+        # 3. Filter by Prep Preference
+        filtered_options = [
+            item for item in diet_filtered
             if item.get("prep_type") == target_prep_type
         ]
 
-        valid_options = filtered_options if filtered_options else condition_filtered
+        valid_options = filtered_options if filtered_options else diet_filtered
 
+        # 4. Avoid consecutive repeats
         if slot in previous_meal_plan and len(valid_options) > 1:
             yesterday_meal = previous_meal_plan[slot]["name"]
             valid_options = [item for item in valid_options if item["name"] != yesterday_meal]

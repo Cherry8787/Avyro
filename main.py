@@ -1,7 +1,7 @@
 # ==========================================
 # FILE: main.py
 # DESCRIPTION: CustomTkinter GUI featuring unboxed side-by-side affirmation & exercise text,
-# increased title size & spacing for the meal planner header, and strict validation.
+# increased title size & spacing for the meal planner header, and a "Show Vegetarian Only" filter checkbox in Window 5.
 # ==========================================
 
 import webbrowser
@@ -361,7 +361,7 @@ class AvyroApp(ctk.CTk):
         self.show_window_5_food_selection()
 
     # ==================================================
-    # WINDOW 5: Food Preferences Checklist
+    # WINDOW 5: Food Preferences Checklist with Vegetarian-Only Filter
     # ==================================================
     def show_window_5_food_selection(self):
         self.clear_container()
@@ -369,22 +369,23 @@ class AvyroApp(ctk.CTk):
         ctk.CTkLabel(self.container, text="CURATED DIETARY PREFERENCES", font=ctk.CTkFont(family=FONT_SERIF[0], size=16, weight="bold"), text_color=TEXT_WHITE).pack(pady=(5, 2))
         ctk.CTkLabel(self.container, text=f"Focus: {self.user_data['medical_condition']} • Select items to include:", font=ctk.CTkFont(family=FONT_SERIF[0], size=11), text_color=TEXT_GOLD).pack(pady=(0, 10))
 
-        scroll_frame = ctk.CTkScrollableFrame(self.container, width=460, height=360, fg_color=CARD_BG, corner_radius=14, border_width=1, border_color=BORDER_GOLD)
-        scroll_frame.pack(pady=10)
+        # Filter Card at the top of selection
+        filter_card = ctk.CTkFrame(self.container, fg_color=CARD_BG, corner_radius=12, border_width=1, border_color=BORDER_GOLD)
+        filter_card.pack(fill="x", pady=(0, 10), padx=10, ipadx=10, ipady=8)
+
+        self.veg_only_var = ctk.BooleanVar(value=False)
+        ctk.CTkCheckBox(
+            filter_card, text="🌿 Show Vegetarian Only", variable=self.veg_only_var,
+            fg_color=GOLD_PRIMARY, hover_color=GOLD_HOVER, text_color=TEXT_WHITE,
+            command=self.refresh_food_list, font=ctk.CTkFont(family=FONT_SERIF[0], size=12, weight="bold")
+        ).pack(anchor="w", padx=10, pady=4)
+
+        # Scrollable Frame for food items
+        self.scroll_frame = ctk.CTkScrollableFrame(self.container, width=460, height=300, fg_color=CARD_BG, corner_radius=14, border_width=1, border_color=BORDER_GOLD)
+        self.scroll_frame.pack(pady=5)
 
         self.checkbox_vars = {}
-
-        for category, items in FOOD_DATABASE.items():
-            ctk.CTkLabel(scroll_frame, text=f"• {category.upper()} •", font=ctk.CTkFont(family=FONT_SERIF[0], size=13, weight="bold"), text_color=GOLD_PRIMARY).pack(anchor="w", padx=15, pady=(12, 6))
-            for food in items:
-                var = ctk.BooleanVar(value=True)
-                chk = ctk.CTkCheckBox(
-                    scroll_frame, text=food["name"], variable=var,
-                    fg_color=GOLD_PRIMARY, hover_color=GOLD_HOVER, text_color=TEXT_WHITE,
-                    border_color=BORDER_GOLD, font=ctk.CTkFont(family=FONT_BODY[0], size=12)
-                )
-                chk.pack(anchor="w", padx=25, pady=4)
-                self.checkbox_vars[food["name"]] = var
+        self.populate_food_checklist()
 
         ctk.CTkButton(
             self.container, text="GENERATE EXCLUSIVE MEAL PLAN ✨", width=480, height=46, corner_radius=10,
@@ -395,9 +396,47 @@ class AvyroApp(ctk.CTk):
 
         self.add_contact_us_footer()
 
+    def populate_food_checklist(self):
+        # Clear existing checkboxes in scroll frame
+        for widget in self.scroll_frame.winfo_children():
+            widget.destroy()
+
+        self.checkbox_vars = {}
+        veg_only = self.veg_only_var.get()
+
+        for category, items in FOOD_DATABASE.items():
+            # If "Show Vegetarian Only" is checked, filter out non-veg items
+            filtered_items = [
+                item for item in items 
+                if not veg_only or item.get("diet_type", "Veg") == "Veg"
+            ]
+            
+            if not filtered_items:
+                continue
+
+            ctk.CTkLabel(self.scroll_frame, text=f"• {category.upper()} •", font=ctk.CTkFont(family=FONT_SERIF[0], size=13, weight="bold"), text_color=GOLD_PRIMARY).pack(anchor="w", padx=15, pady=(12, 6))
+            
+            for food in filtered_items:
+                var = ctk.BooleanVar(value=True)
+                diet_tag = f"[{food.get('diet_type', 'Veg')}]"
+                chk = ctk.CTkCheckBox(
+                    self.scroll_frame, text=f"{diet_tag} {food['name']}", variable=var,
+                    fg_color=GOLD_PRIMARY, hover_color=GOLD_HOVER, text_color=TEXT_WHITE,
+                    border_color=BORDER_GOLD, font=ctk.CTkFont(family=FONT_BODY[0], size=12)
+                )
+                chk.pack(anchor="w", padx=25, pady=4)
+                self.checkbox_vars[food["name"]] = var
+
+    def refresh_food_list(self):
+        self.populate_food_checklist()
+
     def save_w5_and_next(self):
         selected = [name for name, var in self.checkbox_vars.items() if var.get()]
         self.user_data["selected_foods"] = selected
+        
+        # Save preference so Window 6 meal generation respects it
+        self.user_data["allowed_diets"] = ["Veg"] if self.veg_only_var.get() else ["Veg", "Non-Veg"]
+
         self.show_window_6_daily_plan()
 
     # ==================================================
@@ -411,7 +450,13 @@ class AvyroApp(ctk.CTk):
         target_cal = get_target_calories(tdee, self.user_data["target"], self.user_data["medical_condition"])
         split = get_meal_calorie_split(target_cal)
 
-        meal_plan = generate_daily_meal_plan(self.user_data["prep_pref"], self.user_data["medical_condition"], self.previous_meal_plan)
+        allowed_diets = self.user_data.get("allowed_diets", ["Veg", "Non-Veg"])
+        meal_plan = generate_daily_meal_plan(
+            prep_pref=self.user_data["prep_pref"],
+            medical_condition=self.user_data["medical_condition"],
+            allowed_diet_types=allowed_diets,
+            previous_meal_plan=self.previous_meal_plan
+        )
         self.previous_meal_plan = meal_plan
 
         # Header Badge Card
@@ -425,9 +470,7 @@ class AvyroApp(ctk.CTk):
             font=ctk.CTkFont(family=FONT_SERIF[0], size=12, weight="bold"), text_color=GOLD_PRIMARY
         ).pack(anchor="w", padx=10, pady=(3, 0))
 
-        # ==========================================
-        # UNBOXED SIDE-BY-SIDE AFFIRMATION & EXERCISE TEXT
-        # ==========================================
+        # Unboxed Side-by-Side Affirmation & Exercise Text
         duo_frame = ctk.CTkFrame(self.container, fg_color="transparent")
         duo_frame.pack(fill="x", pady=6)
 
@@ -467,8 +510,6 @@ class AvyroApp(ctk.CTk):
             justify="left"
         ).pack(anchor="w", padx=4, pady=(2, 0))
 
-        # ==========================================
-
         # Schedule banner
         sched_card = ctk.CTkFrame(self.container, fg_color=BG_GRADIENT_ALT, corner_radius=10, border_width=1, border_color="#2D291E")
         sched_card.pack(fill="x", pady=6, ipady=6)
@@ -478,19 +519,16 @@ class AvyroApp(ctk.CTk):
             font=ctk.CTkFont(family=FONT_SERIF[0], size=11, slant="italic"), text_color=TEXT_GOLD
         ).pack()
 
-        # ==========================================
-        # MEAL PLANNER SECTION TITLE (Increased Font & Spacing)
-        # ==========================================
+        # Meal Planner Section Title
         title_frame = ctk.CTkFrame(self.container, fg_color="transparent")
-        title_frame.pack(fill="x", pady=(20, 10))  # Increased top and bottom padding
+        title_frame.pack(fill="x", pady=(20, 10))
         
         ctk.CTkLabel(
             title_frame, 
             text="—   Y O U R   D A I L Y   M E A L   P L A N N E R   —", 
-            font=ctk.CTkFont(family=FONT_SERIF[0], size=15, weight="bold"),  # Increased font size
+            font=ctk.CTkFont(family=FONT_SERIF[0], size=15, weight="bold"),
             text_color=GOLD_PRIMARY
         ).pack(anchor="center")
-        # ==========================================
 
         slots = [
             ("🍳 BREAKFAST", "08:30 AM", "Breakfast"),
@@ -508,7 +546,8 @@ class AvyroApp(ctk.CTk):
             top_frame = ctk.CTkFrame(slot_card, fg_color="transparent")
             top_frame.pack(fill="x", expand=True)
 
-            ctk.CTkLabel(top_frame, text=f"{code} ({time_str})", font=ctk.CTkFont(family=FONT_SERIF[0], size=12, weight="bold"), text_color=GOLD_PRIMARY).pack(side="left")
+            diet_label = f"[{item.get('diet_type', 'Veg')}]"
+            ctk.CTkLabel(top_frame, text=f"{code} ({time_str}) • {diet_label}", font=ctk.CTkFont(family=FONT_SERIF[0], size=12, weight="bold"), text_color=GOLD_PRIMARY).pack(side="left")
             ctk.CTkLabel(top_frame, text=f"~{item['calories']} kcal (Goal: {split[slot_key]})", font=ctk.CTkFont(family=FONT_SERIF[0], size=11), text_color=SUBTEXT_MUTED).pack(side="right")
 
             bottom_frame = ctk.CTkFrame(slot_card, fg_color="transparent")

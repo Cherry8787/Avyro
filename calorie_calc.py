@@ -7,7 +7,7 @@
 def calculate_bmi(weight_kg: float, height_cm: float) -> tuple[float, str]:
     """
     Calculates the Body Mass Index (BMI) based on weight in kilograms and height in centimeters,
-    and returns a supportive, non-judgmental category status.
+    and returns a status.
     
     Args:
         weight_kg (float): Weight of the user in kilograms.
@@ -16,13 +16,13 @@ def calculate_bmi(weight_kg: float, height_cm: float) -> tuple[float, str]:
     Returns:
         tuple[float, str]: Calculated BMI rounded to 1 decimal place and descriptive category string.
     """
-    # Convert height from centimeters to meters[cite: 1]
+    # Convert height from centimeters to meters
     height_m = height_cm / 100
     
-    # Calculate BMI formula: weight (kg) / [height (m)]^2[cite: 1]
+    # Calculate BMI formula: weight (kg) / [height (m)]^2
     bmi = round(weight_kg / (height_m**2), 1)
 
-    # Assign non-judgmental supportive wellness categories[cite: 1]
+    # Assign wellness categories
     if bmi < 18.5:
         category = "Balanced Focus"
     elif 18.5 <= bmi < 24.9:
@@ -50,10 +50,10 @@ def calculate_bmr(
     Returns:
         float: Calculated BMR in calories/day.
     """
-    # Apply Mifflin-St Jeor equations differentiated by gender[cite: 1]
+    # Apply Mifflin-St Jeor equations differentiated by gender
     if gender.strip().lower() == "male":
         bmr = (10 * weight_kg) + (6.25 * height_cm) - (5 * age) + 5
-    else:  # Female equation variant[cite: 1]
+    else:  # Female equation variant
         bmr = (10 * weight_kg) + (6.25 * height_cm) - (5 * age) - 161
     return bmr
 
@@ -69,13 +69,13 @@ def calculate_tdee(bmr: float, activity_level: str) -> float:
     Returns:
         float: Total Daily Energy Expenditure (TDEE).
     """
-    # Standard activity multiplier mapping dictionary[cite: 1]
+    # Standard activity multiplier mapping dictionary
     multipliers = {
-        "sedentary": 1.2,    # Little to no exercise[cite: 1]
-        "light": 1.375,      # Light exercise 1-3 days/week[cite: 1]
-        "moderate": 1.55,    # Moderate exercise 3-5 days/week[cite: 1]
-        "active": 1.725,     # Hard exercise 6-7 days/week[cite: 1]
-        "n/a": 1.2,          # Default fallback[cite: 1]
+        "sedentary": 1.2,    # Little to no exercise
+        "light": 1.375,      # Light exercise 1-3 days/week
+        "moderate": 1.55,    # Moderate exercise 3-5 days/week
+        "active": 1.725,     # Hard exercise 6-7 days/week
+        "n/a": 1.2,          # Default fallback
     }
     
     key = activity_level.strip().lower()
@@ -97,7 +97,7 @@ def get_target_calories(tdee: float, target_goal: str, medical_condition: str = 
     """
     goal = target_goal.strip().lower()
 
-    # Base adjustments according to goal[cite: 1]
+    # Base adjustments according to goal
     if "loss" in goal:
         target = tdee - 400
     elif "gain" in goal:
@@ -126,8 +126,8 @@ def get_meal_calorie_split(target_calories: int) -> dict:
         dict: Calorie targets allocated for Breakfast, Lunch, Snacks, and Dinner.
     """
     return {
-        "Breakfast": int(round(target_calories * 0.25)),  # 25% allocation[cite: 1]
-        "Lunch": int(round(target_calories * 0.35)),      # 35% allocation[cite: 1]
-        "Snacks": int(round(target_calories * 0.10)),     # 10% allocation[cite: 1]
-        "Dinner": int(round(target_calories * 0.30)),     # 30% allocation[cite: 1]
+        "Breakfast": int(round(target_calories * 0.25)),  # 25% allocation
+        "Lunch": int(round(target_calories * 0.35)),      # 35% allocation
+        "Snacks": int(round(target_calories * 0.10)),     # 10% allocation
+        "Dinner": int(round(target_calories * 0.30)),     # 30% allocation
     }
