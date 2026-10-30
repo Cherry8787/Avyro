@@ -143,6 +143,7 @@ class AvyroApp(ctk.CTk):
             font=ctk.CTkFont(family=FONT_BODY[0], size=12)
         )
         self.entry_name.pack(pady=(4, 16))
+        self.entry_name.bind("<KeyRelease>", self.check_w1_inputs)
 
         ctk.CTkLabel(card, text="EMAIL OR PHONE", font=ctk.CTkFont(family=FONT_SERIF[0], size=11, weight="bold"), text_color=TEXT_GOLD).pack(anchor="w", padx=25)
         self.entry_email = ctk.CTkEntry(
@@ -151,15 +152,28 @@ class AvyroApp(ctk.CTk):
             font=ctk.CTkFont(family=FONT_BODY[0], size=12)
         )
         self.entry_email.pack(pady=(4, 24))
+        self.entry_email.bind("<KeyRelease>", self.check_w1_inputs)
 
-        ctk.CTkButton(
+        # Button is disabled initially until both fields are populated
+        self.btn_begin = ctk.CTkButton(
             card, text="BEGIN MEMBERSHIP ➔", width=400, height=46,
             corner_radius=10, fg_color=GOLD_PRIMARY, hover_color=GOLD_HOVER,
             text_color="#000000", font=ctk.CTkFont(family=FONT_SERIF[0], size=13, weight="bold"),
-            command=self.save_w1_and_next
-        ).pack(pady=10)
+            command=self.save_w1_and_next,
+            state="disabled"
+        )
+        self.btn_begin.pack(pady=10)
 
         self.add_contact_us_footer()
+
+    def check_w1_inputs(self, event=None):
+        """Enables or disables the Begin Membership button based on text inputs."""
+        name_val = self.entry_name.get().strip()
+        email_val = self.entry_email.get().strip()
+        if name_val and email_val:
+            self.btn_begin.configure(state="normal")
+        else:
+            self.btn_begin.configure(state="disabled")
 
     def save_w1_and_next(self):
         self.user_data["name"] = self.entry_name.get().strip() or "User"
@@ -177,10 +191,9 @@ class AvyroApp(ctk.CTk):
 
         ctk.CTkLabel(card, text="BODY METRICS & PROFILE", font=ctk.CTkFont(family=FONT_SERIF[0], size=16, weight="bold"), text_color=TEXT_WHITE).pack(pady=(5, 18))
 
-        # Age
+        # Age (Left empty with placeholder for user input)
         ctk.CTkLabel(card, text="AGE (YEARS)", font=ctk.CTkFont(family=FONT_SERIF[0], size=10, weight="bold"), text_color=TEXT_GOLD).pack(anchor="w", padx=25)
-        self.entry_age = ctk.CTkEntry(card, width=400, height=40, corner_radius=8, fg_color=CARD_INNER_BG, border_color=BORDER_GOLD, border_width=1, text_color=TEXT_WHITE)
-        self.entry_age.insert(0, "20")
+        self.entry_age = ctk.CTkEntry(card, placeholder_text="Enter your age", width=400, height=40, corner_radius=8, fg_color=CARD_INNER_BG, border_color=BORDER_GOLD, border_width=1, text_color=TEXT_WHITE)
         self.entry_age.pack(pady=(4, 14))
 
         # Gender
@@ -192,16 +205,14 @@ class AvyroApp(ctk.CTk):
             unselected_color=CARD_INNER_BG, text_color=TEXT_WHITE, font=ctk.CTkFont(family=FONT_SERIF[0], size=11)
         ).pack(pady=(4, 14))
 
-        # Height
+        # Height (Left empty with placeholder for user input)
         ctk.CTkLabel(card, text="HEIGHT (CM)", font=ctk.CTkFont(family=FONT_SERIF[0], size=10, weight="bold"), text_color=TEXT_GOLD).pack(anchor="w", padx=25)
-        self.entry_height = ctk.CTkEntry(card, width=400, height=40, corner_radius=8, fg_color=CARD_INNER_BG, border_color=BORDER_GOLD, border_width=1, text_color=TEXT_WHITE)
-        self.entry_height.insert(0, "170")
+        self.entry_height = ctk.CTkEntry(card, placeholder_text="Enter your height in cm", width=400, height=40, corner_radius=8, fg_color=CARD_INNER_BG, border_color=BORDER_GOLD, border_width=1, text_color=TEXT_WHITE)
         self.entry_height.pack(pady=(4, 14))
 
-        # Weight
+        # Weight (Left empty with placeholder for user input)
         ctk.CTkLabel(card, text="WEIGHT (KG)", font=ctk.CTkFont(family=FONT_SERIF[0], size=10, weight="bold"), text_color=TEXT_GOLD).pack(anchor="w", padx=25)
-        self.entry_weight = ctk.CTkEntry(card, width=400, height=40, corner_radius=8, fg_color=CARD_INNER_BG, border_color=BORDER_GOLD, border_width=1, text_color=TEXT_WHITE)
-        self.entry_weight.insert(0, "65")
+        self.entry_weight = ctk.CTkEntry(card, placeholder_text="Enter your weight in kg", width=400, height=40, corner_radius=8, fg_color=CARD_INNER_BG, border_color=BORDER_GOLD, border_width=1, text_color=TEXT_WHITE)
         self.entry_weight.pack(pady=(4, 14))
 
         # Target Goal
@@ -226,10 +237,10 @@ class AvyroApp(ctk.CTk):
 
     def save_w2_and_next(self):
         try:
-            self.user_data["age"] = int(self.entry_age.get())
+            self.user_data["age"] = int(self.entry_age.get()) if self.entry_age.get().strip() else 20
             self.user_data["gender"] = self.gender_var.get()
-            self.user_data["height"] = float(self.entry_height.get())
-            self.user_data["weight"] = float(self.entry_weight.get())
+            self.user_data["height"] = float(self.entry_height.get()) if self.entry_height.get().strip() else 170.0
+            self.user_data["weight"] = float(self.entry_weight.get()) if self.entry_weight.get().strip() else 65.0
             self.user_data["target"] = self.target_var.get()
         except ValueError:
             pass

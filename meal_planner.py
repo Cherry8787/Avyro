@@ -31,11 +31,10 @@ def generate_daily_meal_plan(prep_pref="a", previous_meal_plan=None):
             yesterday_meal = previous_meal_plan[slot]["name"]
             valid_options = [item for item in valid_options if item["name"] != yesterday_meal]
 
-        # Pick a random meal option
+        # Pick a random meal option from the massive dataset
         chosen_item = random.choice(valid_options).copy()
 
         # OVERRIDE LINK FOR TAKEOUT PREFERENCE ("c")
-        # If user selected takeout ("c"), force link to open a restaurant search on Google Maps
         if prep_pref == "c":
             meal_query = chosen_item['name'].replace(' ', '+')
             chosen_item["link"] = f"https://www.google.com/maps/search/{meal_query}+Restaurants+Near+Me"
